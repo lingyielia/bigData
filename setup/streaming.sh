@@ -30,3 +30,5 @@ hadoop jar /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop-mapreduc
 
 hdfs dfs -ls /user/lz1714/class2/output
 hdfs dfs -cat /user/lz1714/class2/output/part-00000
+
+hdfs dfs -rm -r /user/lz1714/class2/output
