@@ -29,7 +29,11 @@ scp dumbo:class3/\*.py .
 ```
  
 * from HDFS to workstation:
+```
 hdfs dfs -get /user/lz1714/class3/output ./class3
+```
 
 * from workstation to HDFS:
+```
 hdfs dfs -put ./class3/pageRank_mapper.py /user/lz1714/class3/python_code
+```
