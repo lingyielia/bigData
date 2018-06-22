@@ -1,15 +1,15 @@
-#Create the tunnel
+# Create the tunnel
 ```      
 ssh hpcgwtunnel
 ```
 
-#Log into dumbo
+# Log into dumbo
 open a new terminal
 ```
 ssh -Y dumbo
 ```
 
-#Transfer files
+# Transfer files
 open a new terminal, go to the right local directory
 
 * from local to dumbo:
