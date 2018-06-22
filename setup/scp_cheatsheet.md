@@ -1,15 +1,15 @@
-# Create the tunnel
+#Create the tunnel
 ```      
 ssh hpcgwtunnel
 ```
 
-# Log into dumbo
+#Log into dumbo
 open a new terminal
 ```
 ssh -Y dumbo
 ```
 
-# Transfer files
+#Transfer files
 open a new terminal, go to the right local directory
 
 * from local to dumbo:
@@ -26,8 +26,8 @@ scp *.py dumbo:class3/
 scp dumbo:class3/tweet.txt .
 scp dumbo:class3/mapper.py dumbo:class3/reducer.py .
 scp dumbo:class3/\*.py .
+scp -r dumbo:class3/ .
 ```
- 
 * from HDFS to workstation:
 ```
 hdfs dfs -get /user/lz1714/class3/output ./class3
@@ -36,4 +36,21 @@ hdfs dfs -get /user/lz1714/class3/output ./class3
 * from workstation to HDFS:
 ```
 hdfs dfs -put ./class3/pageRank_mapper.py /user/lz1714/class3/python_code
+```
+
+
+# Pig
+Run grunt locally:
+```
+pig -x local
+```
+
+Running scripts (and Jar files) that are stored in HDFS:
+```
+pig hdfs://dumbo/user/lz1714/class5/searchKeyword.pig
+```
+
+exit grunt:
+```
+quit
 ```
