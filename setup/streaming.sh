@@ -1,6 +1,3 @@
-ssh lz1714@gw.hpc.nyu.edu
-ssh -Y lz1714@dumbo.es.its.nyu.edu
-
 vi wordCount_mapper.py
 vi wordCount_reducer.py
 vi tweet.txt
