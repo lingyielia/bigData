@@ -54,3 +54,32 @@ exit grunt:
 ```
 quit
 ```
+
+# Hive
+```
+hdfs dfs -setfacl -m default:user:impala:rwx /user/lz1714
+hdfs dfs -setfacl -m user:impala:rwx /user/lz1714
+
+hdfs dfs -mkdir hiveInput
+
+// Get data ready for Hive tests
+$ hdfs dfs -put smallWeather1.txt hiveInput
+$ hdfs dfs -ls hiveInput
+$ hdfs dfs -cat hiveInput/smallWeather1.txt
+$ hdfs dfs -setfacl -R -m user:impala:rwx /user/<your_netID>/hiveInput
+```
+
+* Create a hive external table
+```
+$ beeline
+beeline> !connect jdbc:hive2://babar.es.its.nyu.edu:10000/
+
+hive> create database lz1714; 
+hive> use lz1714;
+hive> show tables;
+hive> create external table w1 (data1 string, year int, data2 string, temperature int, quality tinyint, data3 string)
+row format delimited fields terminated by ','
+location '/user/lz1714/hiveInput/';
+hive> show tables; 
+hive> describe w1;
+```
