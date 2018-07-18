@@ -1,0 +1,1115 @@
+[lz1714@login-1-1 ~]$ hdfs dfs -setfacl -m default:user:impala:rwx /user/lz1714
+[lz1714@login-1-1 ~]$ hdfs dfs -setfacl -m user:impala:rwx /user/lz1714
+[lz1714@login-1-1 ~]$ hdfs dfs -mkdir hiveInput
+[lz1714@login-1-1 ~]$ hdfs dfs -mkdir impalaInput
+[lz1714@login-1-1 ~]$ ls
+class3  class5
+[lz1714@login-1-1 ~]$ vi smallWeather1.txt
+[lz1714@login-1-1 ~]$ hdfs dfs -put smallWeather1.txt hiveInput
+[lz1714@login-1-1 ~]$ hdfs dfs -ls hiveInput
+Found 1 items
+-rw-------+  3 lz1714 users        559 2018-07-01 14:41 hiveInput/smallWeather1.txt
+[lz1714@login-1-1 ~]$ hdfs dfs -cat hiveInput/smallWeather1.txt
+006701199099999,1950,051507004888888888888888888888888888888888888888888888888889999999N9,+0000,1,+99999999999
+004301199099999,1950,051512004888888888888888888888888888888888888888888888888889999999N9,+0022,1,+99999999999
+004301199099999,1950,051518004888888888888888888888888888888888888888888888888889999999N9,-0011,1,+99999999999
+004301265099999,1949,032412004888888888888888888888888888888888888888888888888880500001N9,+0111,1,+99999999999
+004301265099999,1949,032418004888888888888888888888888888888888888888888888888880500001N9,+0078,1,+99999999999
+[lz1714@login-1-1 ~]$ hdfs dfs -setfacl -R -m user:impala:rwx /user/lz1714/hiveInput
+[lz1714@login-1-1 ~]$ hdfs dfs -put smallWeather1.txt impalaInput
+[lz1714@login-1-1 ~]$ hdfs dfs -cat impalaInput/smallWeather1.txt
+006701199099999,1950,051507004888888888888888888888888888888888888888888888888889999999N9,+0000,1,+99999999999
+004301199099999,1950,051512004888888888888888888888888888888888888888888888888889999999N9,+0022,1,+99999999999
+004301199099999,1950,051518004888888888888888888888888888888888888888888888888889999999N9,-0011,1,+99999999999
+004301265099999,1949,032412004888888888888888888888888888888888888888888888888880500001N9,+0111,1,+99999999999
+004301265099999,1949,032418004888888888888888888888888888888888888888888888888880500001N9,+0078,1,+99999999999
+[lz1714@login-1-1 ~]$ hdfs dfs -setfacl -R -m user:impala:rwx /user/lz1714/impalaInput
+[lz1714@login-1-1 ~]$ beeline
+Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=512M; support was removed in 8.0
+Java HotSpot(TM) 64-Bit Server VM warning: Using incremental CMS is deprecated and will likely be removed in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=512M; support was removed in 8.0
+Beeline version 1.1.0-cdh5.11.1 by Apache Hive
+beeline> !connect jdbc:hive2://babar.es.its.nyu.edu:10000/
+scan complete in 2ms
+Connecting to jdbc:hive2://babar.es.its.nyu.edu:10000/
+Enter username for jdbc:hive2://babar.es.its.nyu.edu:10000/: lz1714
+Enter password for jdbc:hive2://babar.es.its.nyu.edu:10000/: ************
+Connected to: Apache Hive (version 1.1.0-cdh5.11.1)
+Driver: Hive JDBC (version 1.1.0-cdh5.11.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> create database lz1714;
+INFO  : Compiling command(queryId=hive_20180701144545_47a3107a-e23e-4906-953a-e8f28b7cadcf): create database lz1714
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701144545_47a3107a-e23e-4906-953a-e8f28b7cadcf); Time taken: 0.003 seconds
+INFO  : Executing command(queryId=hive_20180701144545_47a3107a-e23e-4906-953a-e8f28b7cadcf): create database lz1714
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701144545_47a3107a-e23e-4906-953a-e8f28b7cadcf); Time taken: 0.111 seconds
+INFO  : OK
+No rows affected (0.171 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> use lz1714;
+INFO  : Compiling command(queryId=hive_20180701144545_f32470e2-442e-40d5-b416-b922615e57f9): use lz1714
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701144545_f32470e2-442e-40d5-b416-b922615e57f9); Time taken: 0.002 seconds
+INFO  : Executing command(queryId=hive_20180701144545_f32470e2-442e-40d5-b416-b922615e57f9): use lz1714
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701144545_f32470e2-442e-40d5-b416-b922615e57f9); Time taken: 0.005 seconds
+INFO  : OK
+No rows affected (0.013 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> show tables;
+INFO  : Compiling command(queryId=hive_20180701144545_23651ab6-ddb9-4df2-8cee-eb32dae330ed): show tables
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:tab_name, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701144545_23651ab6-ddb9-4df2-8cee-eb32dae330ed); Time taken: 0.002 seconds
+INFO  : Executing command(queryId=hive_20180701144545_23651ab6-ddb9-4df2-8cee-eb32dae330ed): show tables
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701144545_23651ab6-ddb9-4df2-8cee-eb32dae330ed); Time taken: 0.113 seconds
+INFO  : OK
++-----------+--+
+| tab_name  |
++-----------+--+
++-----------+--+
+No rows selected (0.146 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> create external table w1 (data1 string, year int, data2 string, temperature int, quality tinyint, data3 string)
+. . . . . . . . . . . . . . . . . . . . . .> row format delimited fields terminated by ','
+. . . . . . . . . . . . . . . . . . . . . .> location '/user/lz1714/hiveInput/';
+INFO  : Compiling command(queryId=hive_20180701144747_0a0430be-9167-406e-b054-f5332e426267): create external table w1 (data1 string, year int, data2 string, temperature int, quality tinyint, data3 string)
+row format delimited fields terminated by ','
+location '/user/lz1714/hiveInput/'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701144747_0a0430be-9167-406e-b054-f5332e426267); Time taken: 0.002 seconds
+INFO  : Executing command(queryId=hive_20180701144747_0a0430be-9167-406e-b054-f5332e426267): create external table w1 (data1 string, year int, data2 string, temperature int, quality tinyint, data3 string)
+row format delimited fields terminated by ','
+location '/user/lz1714/hiveInput/'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701144747_0a0430be-9167-406e-b054-f5332e426267); Time taken: 0.028 seconds
+INFO  : OK
+No rows affected (0.08 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> show tables;
+INFO  : Compiling command(queryId=hive_20180701144747_e6f085e6-b8d6-48a0-9f7c-2ac2583bf5d0): show tables
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:tab_name, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701144747_e6f085e6-b8d6-48a0-9f7c-2ac2583bf5d0); Time taken: 0.002 seconds
+INFO  : Executing command(queryId=hive_20180701144747_e6f085e6-b8d6-48a0-9f7c-2ac2583bf5d0): show tables
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701144747_e6f085e6-b8d6-48a0-9f7c-2ac2583bf5d0); Time taken: 0.004 seconds
+INFO  : OK
++-----------+--+
+| tab_name  |
++-----------+--+
+| w1        |
++-----------+--+
+1 row selected (0.017 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> describe w1;
+INFO  : Compiling command(queryId=hive_20180701144848_b8351d8b-6b33-49bb-929f-633f8154a8e7): describe w1
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:col_name, type:string, comment:from deserializer), FieldSchema(name:data_type, type:string, comment:from deserializer), FieldSchema(name:comment, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701144848_b8351d8b-6b33-49bb-929f-633f8154a8e7); Time taken: 0.018 seconds
+INFO  : Executing command(queryId=hive_20180701144848_b8351d8b-6b33-49bb-929f-633f8154a8e7): describe w1
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701144848_b8351d8b-6b33-49bb-929f-633f8154a8e7); Time taken: 0.009 seconds
+INFO  : OK
++--------------+------------+----------+--+
+|   col_name   | data_type  | comment  |
++--------------+------------+----------+--+
+| data1        | string     |          |
+| year         | int        |          |
+| data2        | string     |          |
+| temperature  | int        |          |
+| quality      | tinyint    |          |
+| data3        | string     |          |
++--------------+------------+----------+--+
+6 rows selected (0.114 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from w1;
+INFO  : Compiling command(queryId=hive_20180701144949_dd936117-c62a-48cc-9fb0-afc3b32ba60b): select * from w1
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:w1.data1, type:string, comment:null), FieldSchema(name:w1.year, type:int, comment:null), FieldSchema(name:w1.data2, type:string, comment:null), FieldSchema(name:w1.temperature, type:int, comment:null), FieldSchema(name:w1.quality, type:tinyint, comment:null), FieldSchema(name:w1.data3, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701144949_dd936117-c62a-48cc-9fb0-afc3b32ba60b); Time taken: 0.149 seconds
+INFO  : Executing command(queryId=hive_20180701144949_dd936117-c62a-48cc-9fb0-afc3b32ba60b): select * from w1
+INFO  : Completed executing command(queryId=hive_20180701144949_dd936117-c62a-48cc-9fb0-afc3b32ba60b); Time taken: 0.004 seconds
+INFO  : OK
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+|     w1.data1     | w1.year  |                      w1.data2                      | w1.temperature  | w1.quality  |    w1.data3    |
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | +99999999999   |
+| 004301265099999  | 1949     | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111             | 1           | +99999999999   |
+| 004301265099999  | 1949     | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78              | 1           | +99999999999   |
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+5 rows selected (0.299 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from w1 limit 2;
+INFO  : Compiling command(queryId=hive_20180701144949_fbaf2bba-9fea-4e71-be0e-f4c71c3a0c4e): select * from w1 limit 2
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:w1.data1, type:string, comment:null), FieldSchema(name:w1.year, type:int, comment:null), FieldSchema(name:w1.data2, type:string, comment:null), FieldSchema(name:w1.temperature, type:int, comment:null), FieldSchema(name:w1.quality, type:tinyint, comment:null), FieldSchema(name:w1.data3, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701144949_fbaf2bba-9fea-4e71-be0e-f4c71c3a0c4e); Time taken: 0.128 seconds
+INFO  : Executing command(queryId=hive_20180701144949_fbaf2bba-9fea-4e71-be0e-f4c71c3a0c4e): select * from w1 limit 2
+INFO  : Completed executing command(queryId=hive_20180701144949_fbaf2bba-9fea-4e71-be0e-f4c71c3a0c4e); Time taken: 0.004 seconds
+INFO  : OK
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+|     w1.data1     | w1.year  |                      w1.data2                      | w1.temperature  | w1.quality  |    w1.data3    |
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | +99999999999   |
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+2 rows selected (0.268 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select year from w1;
+INFO  : Compiling command(queryId=hive_20180701144949_efaddb63-19e8-4115-8d00-75192d8794a6): select year from w1
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:year, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701144949_efaddb63-19e8-4115-8d00-75192d8794a6); Time taken: 0.156 seconds
+INFO  : Executing command(queryId=hive_20180701144949_efaddb63-19e8-4115-8d00-75192d8794a6): select year from w1
+INFO  : Completed executing command(queryId=hive_20180701144949_efaddb63-19e8-4115-8d00-75192d8794a6); Time taken: 0.003 seconds
+INFO  : OK
++-------+--+
+| year  |
++-------+--+
+| 1950  |
+| 1950  |
+| 1950  |
+| 1949  |
+| 1949  |
++-------+--+
+5 rows selected (0.298 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from w1 where year > 1949;
+INFO  : Compiling command(queryId=hive_20180701145050_f1b279d7-5954-4180-af52-3bc219088f30): select * from w1 where year > 1949
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:w1.data1, type:string, comment:null), FieldSchema(name:w1.year, type:int, comment:null), FieldSchema(name:w1.data2, type:string, comment:null), FieldSchema(name:w1.temperature, type:int, comment:null), FieldSchema(name:w1.quality, type:tinyint, comment:null), FieldSchema(name:w1.data3, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145050_f1b279d7-5954-4180-af52-3bc219088f30); Time taken: 0.157 seconds
+INFO  : Executing command(queryId=hive_20180701145050_f1b279d7-5954-4180-af52-3bc219088f30): select * from w1 where year > 1949
+INFO  : Query ID = hive_20180701145050_f1b279d7-5954-4180-af52-3bc219088f30
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks is set to 0 since there's no reduce operator
+INFO  : number of splits:1
+INFO  : Submitting tokens for job: job_1528077494936_3601
+INFO  : The url to track the job: http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_3601/
+INFO  : Starting Job = job_1528077494936_3601, Tracking URL = http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_3601/
+INFO  : Kill Command = /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop/bin/hadoop job  -kill job_1528077494936_3601
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+INFO  : 2018-07-01 14:50:07,423 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-01 14:50:12,546 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.48 sec
+INFO  : MapReduce Total cumulative CPU time: 2 seconds 480 msec
+INFO  : Ended Job = job_1528077494936_3601
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 1   Cumulative CPU: 2.48 sec   HDFS Read: 4386 HDFS Write: 327 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 2 seconds 480 msec
+INFO  : Completed executing command(queryId=hive_20180701145050_f1b279d7-5954-4180-af52-3bc219088f30); Time taken: 12.624 seconds
+INFO  : OK
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+|     w1.data1     | w1.year  |                      w1.data2                      | w1.temperature  | w1.quality  |    w1.data3    |
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | +99999999999   |
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+3 rows selected (12.923 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from w1 where year >= 1949;
+INFO  : Compiling command(queryId=hive_20180701145050_606bfbdb-841e-44f8-96f2-ca98d83763ad): select * from w1 where year >= 1949
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:w1.data1, type:string, comment:null), FieldSchema(name:w1.year, type:int, comment:null), FieldSchema(name:w1.data2, type:string, comment:null), FieldSchema(name:w1.temperature, type:int, comment:null), FieldSchema(name:w1.quality, type:tinyint, comment:null), FieldSchema(name:w1.data3, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145050_606bfbdb-841e-44f8-96f2-ca98d83763ad); Time taken: 0.2 seconds
+INFO  : Executing command(queryId=hive_20180701145050_606bfbdb-841e-44f8-96f2-ca98d83763ad): select * from w1 where year >= 1949
+INFO  : Query ID = hive_20180701145050_606bfbdb-841e-44f8-96f2-ca98d83763ad
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks is set to 0 since there's no reduce operator
+INFO  : number of splits:1
+INFO  : Submitting tokens for job: job_1528077494936_3602
+INFO  : The url to track the job: http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_3602/
+INFO  : Starting Job = job_1528077494936_3602, Tracking URL = http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_3602/
+INFO  : Kill Command = /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop/bin/hadoop job  -kill job_1528077494936_3602
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+INFO  : 2018-07-01 14:50:35,174 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-01 14:50:40,291 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 2.67 sec
+INFO  : MapReduce Total cumulative CPU time: 2 seconds 670 msec
+INFO  : Ended Job = job_1528077494936_3602
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 1   Cumulative CPU: 2.67 sec   HDFS Read: 4399 HDFS Write: 545 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 2 seconds 670 msec
+INFO  : Completed executing command(queryId=hive_20180701145050_606bfbdb-841e-44f8-96f2-ca98d83763ad); Time taken: 13.501 seconds
+INFO  : OK
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+|     w1.data1     | w1.year  |                      w1.data2                      | w1.temperature  | w1.quality  |    w1.data3    |
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | +99999999999   |
+| 004301265099999  | 1949     | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111             | 1           | +99999999999   |
+| 004301265099999  | 1949     | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78              | 1           | +99999999999   |
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+5 rows selected (13.841 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select distinct year from w1;
+INFO  : Compiling command(queryId=hive_20180701145050_eddfef5c-f16a-4665-882a-28a5d5c17aec): select distinct year from w1
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:year, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145050_eddfef5c-f16a-4665-882a-28a5d5c17aec); Time taken: 0.241 seconds
+INFO  : Executing command(queryId=hive_20180701145050_eddfef5c-f16a-4665-882a-28a5d5c17aec): select distinct year from w1
+INFO  : Query ID = hive_20180701145050_eddfef5c-f16a-4665-882a-28a5d5c17aec
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks not specified. Estimated from input data size: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :   set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :   set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :   set mapreduce.job.reduces=<number>
+INFO  : number of splits:1
+INFO  : Submitting tokens for job: job_1528077494936_3603
+INFO  : The url to track the job: http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_3603/
+INFO  : Starting Job = job_1528077494936_3603, Tracking URL = http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_3603/
+INFO  : Kill Command = /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop/bin/hadoop job  -kill job_1528077494936_3603
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+INFO  : 2018-07-01 14:50:53,033 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-01 14:50:58,146 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.52 sec
+INFO  : 2018-07-01 14:51:03,263 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 3.99 sec
+INFO  : MapReduce Total cumulative CPU time: 3 seconds 990 msec
+INFO  : Ended Job = job_1528077494936_3603
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 3.99 sec   HDFS Read: 7089 HDFS Write: 10 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 3 seconds 990 msec
+INFO  : Completed executing command(queryId=hive_20180701145050_eddfef5c-f16a-4665-882a-28a5d5c17aec); Time taken: 18.0 seconds
+INFO  : OK
++-------+--+
+| year  |
++-------+--+
+| 1949  |
+| 1950  |
++-------+--+
+2 rows selected (18.359 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select w.year, w.temp from
+. . . . . . . . . . . . . . . . . . . . . .> (select year, max(temperature) as temp from w1 group by year) w;
+INFO  : Compiling command(queryId=hive_20180701145151_3b07c7a4-14bb-4b7d-8c08-f11b7610cbf2): select w.year, w.temp from
+(select year, max(temperature) as temp from w1 group by year) w
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:w.year, type:int, comment:null), FieldSchema(name:w.temp, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145151_3b07c7a4-14bb-4b7d-8c08-f11b7610cbf2); Time taken: 0.149 seconds
+INFO  : Executing command(queryId=hive_20180701145151_3b07c7a4-14bb-4b7d-8c08-f11b7610cbf2): select w.year, w.temp from
+(select year, max(temperature) as temp from w1 group by year) w
+INFO  : Query ID = hive_20180701145151_3b07c7a4-14bb-4b7d-8c08-f11b7610cbf2
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks not specified. Estimated from input data size: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :   set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :   set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :   set mapreduce.job.reduces=<number>
+INFO  : number of splits:1
+INFO  : Submitting tokens for job: job_1528077494936_3604
+INFO  : The url to track the job: http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_3604/
+INFO  : Starting Job = job_1528077494936_3604, Tracking URL = http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_3604/
+INFO  : Kill Command = /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop/bin/hadoop job  -kill job_1528077494936_3604
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+INFO  : 2018-07-01 14:51:34,665 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-01 14:51:39,778 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 1.62 sec
+INFO  : 2018-07-01 14:51:44,884 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 4.14 sec
+INFO  : MapReduce Total cumulative CPU time: 4 seconds 140 msec
+INFO  : Ended Job = job_1528077494936_3604
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 4.14 sec   HDFS Read: 7898 HDFS Write: 17 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 4 seconds 140 msec
+INFO  : Completed executing command(queryId=hive_20180701145151_3b07c7a4-14bb-4b7d-8c08-f11b7610cbf2); Time taken: 17.833 seconds
+INFO  : OK
++---------+---------+--+
+| w.year  | w.temp  |
++---------+---------+--+
+| 1949    | 111     |
+| 1950    | 22      |
++---------+---------+--+
+2 rows selected (18.121 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> create external table w2 (data1 string, year int, data2 string, temperature int, quality tinyint, nines int)
+. . . . . . . . . . . . . . . . . . . . . .> row format delimited fields terminated by ','
+. . . . . . . . . . . . . . . . . . . . . .> location '/user/lz1714/hiveInput/';
+INFO  : Compiling command(queryId=hive_20180701145353_e94e7c80-6a30-4992-9d2e-ed5c2599cb9c): create external table w2 (data1 string, year int, data2 string, temperature int, quality tinyint, nines int)
+row format delimited fields terminated by ','
+location '/user/lz1714/hiveInput/'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145353_e94e7c80-6a30-4992-9d2e-ed5c2599cb9c); Time taken: 0.003 seconds
+INFO  : Executing command(queryId=hive_20180701145353_e94e7c80-6a30-4992-9d2e-ed5c2599cb9c): create external table w2 (data1 string, year int, data2 string, temperature int, quality tinyint, nines int)
+row format delimited fields terminated by ','
+location '/user/lz1714/hiveInput/'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701145353_e94e7c80-6a30-4992-9d2e-ed5c2599cb9c); Time taken: 0.039 seconds
+INFO  : OK
+No rows affected (0.091 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> show tables;
+INFO  : Compiling command(queryId=hive_20180701145353_fb62e85e-8fa8-4f4f-bcbf-8138457227ae): show tables
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:tab_name, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145353_fb62e85e-8fa8-4f4f-bcbf-8138457227ae); Time taken: 0.002 seconds
+INFO  : Executing command(queryId=hive_20180701145353_fb62e85e-8fa8-4f4f-bcbf-8138457227ae): show tables
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701145353_fb62e85e-8fa8-4f4f-bcbf-8138457227ae); Time taken: 0.004 seconds
+INFO  : OK
++-----------+--+
+| tab_name  |
++-----------+--+
+| w1        |
+| w2        |
++-----------+--+
+2 rows selected (0.014 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> describe w2;
+INFO  : Compiling command(queryId=hive_20180701145454_977647e1-fc25-419a-ac3a-9f5f95adc4ad): describe w2
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:col_name, type:string, comment:from deserializer), FieldSchema(name:data_type, type:string, comment:from deserializer), FieldSchema(name:comment, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145454_977647e1-fc25-419a-ac3a-9f5f95adc4ad); Time taken: 0.019 seconds
+INFO  : Executing command(queryId=hive_20180701145454_977647e1-fc25-419a-ac3a-9f5f95adc4ad): describe w2
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701145454_977647e1-fc25-419a-ac3a-9f5f95adc4ad); Time taken: 0.009 seconds
+INFO  : OK
++--------------+------------+----------+--+
+|   col_name   | data_type  | comment  |
++--------------+------------+----------+--+
+| data1        | string     |          |
+| year         | int        |          |
+| data2        | string     |          |
+| temperature  | int        |          |
+| quality      | tinyint    |          |
+| nines        | int        |          |
++--------------+------------+----------+--+
+6 rows selected (0.119 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from w2;
+INFO  : Compiling command(queryId=hive_20180701145454_b098c2f8-bde4-49e6-aa8a-b616f2788ae2): select * from w2
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:w2.data1, type:string, comment:null), FieldSchema(name:w2.year, type:int, comment:null), FieldSchema(name:w2.data2, type:string, comment:null), FieldSchema(name:w2.temperature, type:int, comment:null), FieldSchema(name:w2.quality, type:tinyint, comment:null), FieldSchema(name:w2.nines, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145454_b098c2f8-bde4-49e6-aa8a-b616f2788ae2); Time taken: 3.504 seconds
+INFO  : Executing command(queryId=hive_20180701145454_b098c2f8-bde4-49e6-aa8a-b616f2788ae2): select * from w2
+INFO  : Completed executing command(queryId=hive_20180701145454_b098c2f8-bde4-49e6-aa8a-b616f2788ae2); Time taken: 0.004 seconds
+INFO  : OK
++------------------+----------+----------------------------------------------------+-----------------+-------------+-----------+--+
+|     w2.data1     | w2.year  |                      w2.data2                      | w2.temperature  | w2.quality  | w2.nines  |
++------------------+----------+----------------------------------------------------+-----------------+-------------+-----------+--+
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | NULL      |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | NULL      |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | NULL      |
+| 004301265099999  | 1949     | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111             | 1           | NULL      |
+| 004301265099999  | 1949     | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78              | 1           | NULL      |
++------------------+----------+----------------------------------------------------+-----------------+-------------+-----------+--+
+5 rows selected (3.592 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> create external table w3 (data1 string, year int, data2 string, temperature int, quality tinyint, nines bigint)
+. . . . . . . . . . . . . . . . . . . . . .> row format delimited fields terminated by ','
+. . . . . . . . . . . . . . . . . . . . . .> location '/user/<netId>/hiveInput/';
+INFO  : Compiling command(queryId=hive_20180701145555_9cd9ac38-2c5c-46e2-a467-e89b250abf8f): create external table w3 (data1 string, year int, data2 string, temperature int, quality tinyint, nines bigint)
+row format delimited fields terminated by ','
+location '/user/<netId>/hiveInput/'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145555_9cd9ac38-2c5c-46e2-a467-e89b250abf8f); Time taken: 0.004 seconds
+INFO  : Executing command(queryId=hive_20180701145555_9cd9ac38-2c5c-46e2-a467-e89b250abf8f): create external table w3 (data1 string, year int, data2 string, temperature int, quality tinyint, nines bigint)
+row format delimited fields terminated by ','
+location '/user/<netId>/hiveInput/'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+ERROR : FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask. MetaException(message:Got exception: org.apache.hadoop.security.AccessControlException Permission denied: user=lz1714, access=WRITE, inode="/user":eugenetestuser1:users:drwxr-xr-x
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkFsPermission(DefaultAuthorizationProvider.java:279)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.check(DefaultAuthorizationProvider.java:260)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.check(DefaultAuthorizationProvider.java:240)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkPermission(DefaultAuthorizationProvider.java:162)
+	at org.apache.hadoop.hdfs.server.namenode.FSPermissionChecker.checkPermission(FSPermissionChecker.java:152)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkPermission(FSDirectory.java:3529)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkPermission(FSDirectory.java:3512)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkAncestorAccess(FSDirectory.java:3494)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.checkAncestorAccess(FSNamesystem.java:6615)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.mkdirsInternal(FSNamesystem.java:4385)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.mkdirsInt(FSNamesystem.java:4355)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.mkdirs(FSNamesystem.java:4328)
+	at org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer.mkdirs(NameNodeRpcServer.java:873)
+	at org.apache.hadoop.hdfs.server.namenode.AuthorizationProviderProxyClientProtocol.mkdirs(AuthorizationProviderProxyClientProtocol.java:323)
+	at org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolServerSideTranslatorPB.mkdirs(ClientNamenodeProtocolServerSideTranslatorPB.java:618)
+	at org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos$ClientNamenodeProtocol$2.callBlockingMethod(ClientNamenodeProtocolProtos.java)
+	at org.apache.hadoop.ipc.ProtobufRpcEngine$Server$ProtoBufRpcInvoker.call(ProtobufRpcEngine.java:617)
+	at org.apache.hadoop.ipc.RPC$Server.call(RPC.java:1073)
+	at org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2220)
+	at org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2216)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:422)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1920)
+	at org.apache.hadoop.ipc.Server$Handler.run(Server.java:2214)
+)
+INFO  : Completed executing command(queryId=hive_20180701145555_9cd9ac38-2c5c-46e2-a467-e89b250abf8f); Time taken: 0.126 seconds
+Error: Error while processing statement: FAILED: Execution Error, return code 1 from org.apache.hadoop.hive.ql.exec.DDLTask. MetaException(message:Got exception: org.apache.hadoop.security.AccessControlException Permission denied: user=lz1714, access=WRITE, inode="/user":eugenetestuser1:users:drwxr-xr-x
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkFsPermission(DefaultAuthorizationProvider.java:279)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.check(DefaultAuthorizationProvider.java:260)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.check(DefaultAuthorizationProvider.java:240)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkPermission(DefaultAuthorizationProvider.java:162)
+	at org.apache.hadoop.hdfs.server.namenode.FSPermissionChecker.checkPermission(FSPermissionChecker.java:152)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkPermission(FSDirectory.java:3529)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkPermission(FSDirectory.java:3512)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkAncestorAccess(FSDirectory.java:3494)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.checkAncestorAccess(FSNamesystem.java:6615)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.mkdirsInternal(FSNamesystem.java:4385)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.mkdirsInt(FSNamesystem.java:4355)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.mkdirs(FSNamesystem.java:4328)
+	at org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer.mkdirs(NameNodeRpcServer.java:873)
+	at org.apache.hadoop.hdfs.server.namenode.AuthorizationProviderProxyClientProtocol.mkdirs(AuthorizationProviderProxyClientProtocol.java:323)
+	at org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolServerSideTranslatorPB.mkdirs(ClientNamenodeProtocolServerSideTranslatorPB.java:618)
+	at org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos$ClientNamenodeProtocol$2.callBlockingMethod(ClientNamenodeProtocolProtos.java)
+	at org.apache.hadoop.ipc.ProtobufRpcEngine$Server$ProtoBufRpcInvoker.call(ProtobufRpcEngine.java:617)
+	at org.apache.hadoop.ipc.RPC$Server.call(RPC.java:1073)
+	at org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2220)
+	at org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2216)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:422)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1920)
+	at org.apache.hadoop.ipc.Server$Handler.run(Server.java:2214)
+) (state=08S01,code=1)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> create external table w3 (data1 string, year int, data2 string, temperature int, quality tinyint, nines bigint)
+. . . . . . . . . . . . . . . . . . . . . .> row format delimited fields terminated by ','
+. . . . . . . . . . . . . . . . . . . . . .> location '/user/lz1714/hiveInput/';
+INFO  : Compiling command(queryId=hive_20180701145656_6e3f84c9-eff2-44ec-a041-43c3923c3f97): create external table w3 (data1 string, year int, data2 string, temperature int, quality tinyint, nines bigint)
+row format delimited fields terminated by ','
+location '/user/lz1714/hiveInput/'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145656_6e3f84c9-eff2-44ec-a041-43c3923c3f97); Time taken: 0.004 seconds
+INFO  : Executing command(queryId=hive_20180701145656_6e3f84c9-eff2-44ec-a041-43c3923c3f97): create external table w3 (data1 string, year int, data2 string, temperature int, quality tinyint, nines bigint)
+row format delimited fields terminated by ','
+location '/user/lz1714/hiveInput/'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701145656_6e3f84c9-eff2-44ec-a041-43c3923c3f97); Time taken: 0.028 seconds
+INFO  : OK
+No rows affected (0.121 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> show tables;
+INFO  : Compiling command(queryId=hive_20180701145656_4d446b4b-0939-4e08-a7d7-3675115ce003): show tables
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:tab_name, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145656_4d446b4b-0939-4e08-a7d7-3675115ce003); Time taken: 0.002 seconds
+INFO  : Executing command(queryId=hive_20180701145656_4d446b4b-0939-4e08-a7d7-3675115ce003): show tables
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701145656_4d446b4b-0939-4e08-a7d7-3675115ce003); Time taken: 0.005 seconds
+INFO  : OK
++-----------+--+
+| tab_name  |
++-----------+--+
+| w1        |
+| w2        |
+| w3        |
++-----------+--+
+3 rows selected (0.014 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from w3;
+INFO  : Compiling command(queryId=hive_20180701145656_20e4b1dc-3638-4ea6-8101-30c5341b4853): select * from w3
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:w3.data1, type:string, comment:null), FieldSchema(name:w3.year, type:int, comment:null), FieldSchema(name:w3.data2, type:string, comment:null), FieldSchema(name:w3.temperature, type:int, comment:null), FieldSchema(name:w3.quality, type:tinyint, comment:null), FieldSchema(name:w3.nines, type:bigint, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145656_20e4b1dc-3638-4ea6-8101-30c5341b4853); Time taken: 0.152 seconds
+INFO  : Executing command(queryId=hive_20180701145656_20e4b1dc-3638-4ea6-8101-30c5341b4853): select * from w3
+INFO  : Completed executing command(queryId=hive_20180701145656_20e4b1dc-3638-4ea6-8101-30c5341b4853); Time taken: 0.004 seconds
+INFO  : OK
++------------------+----------+----------------------------------------------------+-----------------+-------------+--------------+--+
+|     w3.data1     | w3.year  |                      w3.data2                      | w3.temperature  | w3.quality  |   w3.nines   |
++------------------+----------+----------------------------------------------------+-----------------+-------------+--------------+--+
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | NULL         |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | NULL         |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | NULL         |
+| 004301265099999  | 1949     | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111             | 1           | NULL         |
+| 004301265099999  | 1949     | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78              | 1           | 99999999999  |
++------------------+----------+----------------------------------------------------+-----------------+-------------+--------------+--+
+5 rows selected (0.286 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> drop table w2;
+INFO  : Compiling command(queryId=hive_20180701145757_209c3786-531d-4eed-bc35-653822872d04): drop table w2
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145757_209c3786-531d-4eed-bc35-653822872d04); Time taken: 0.009 seconds
+INFO  : Executing command(queryId=hive_20180701145757_209c3786-531d-4eed-bc35-653822872d04): drop table w2
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701145757_209c3786-531d-4eed-bc35-653822872d04); Time taken: 0.039 seconds
+INFO  : OK
+No rows affected (0.226 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> show tables;
+INFO  : Compiling command(queryId=hive_20180701145757_7d46a16c-778a-499d-8156-21e5eb3a6073): show tables
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:tab_name, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145757_7d46a16c-778a-499d-8156-21e5eb3a6073); Time taken: 0.003 seconds
+INFO  : Executing command(queryId=hive_20180701145757_7d46a16c-778a-499d-8156-21e5eb3a6073): show tables
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701145757_7d46a16c-778a-499d-8156-21e5eb3a6073); Time taken: 0.005 seconds
+INFO  : OK
++-----------+--+
+| tab_name  |
++-----------+--+
+| w1        |
+| w3        |
++-----------+--+
+2 rows selected (0.021 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from w2;
+Error: Error while compiling statement: FAILED: SemanticException [Error 10001]: Line 1:14 Table not found 'w2' (state=42S02,code=10001)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from w3;
+INFO  : Compiling command(queryId=hive_20180701145757_074ddb99-de97-4ee6-90ed-b672716596a6): select * from w3
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:w3.data1, type:string, comment:null), FieldSchema(name:w3.year, type:int, comment:null), FieldSchema(name:w3.data2, type:string, comment:null), FieldSchema(name:w3.temperature, type:int, comment:null), FieldSchema(name:w3.quality, type:tinyint, comment:null), FieldSchema(name:w3.nines, type:bigint, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145757_074ddb99-de97-4ee6-90ed-b672716596a6); Time taken: 0.154 seconds
+INFO  : Executing command(queryId=hive_20180701145757_074ddb99-de97-4ee6-90ed-b672716596a6): select * from w3
+INFO  : Completed executing command(queryId=hive_20180701145757_074ddb99-de97-4ee6-90ed-b672716596a6); Time taken: 0.004 seconds
+INFO  : OK
++------------------+----------+----------------------------------------------------+-----------------+-------------+--------------+--+
+|     w3.data1     | w3.year  |                      w3.data2                      | w3.temperature  | w3.quality  |   w3.nines   |
++------------------+----------+----------------------------------------------------+-----------------+-------------+--------------+--+
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | NULL         |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | NULL         |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | NULL         |
+| 004301265099999  | 1949     | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111             | 1           | NULL         |
+| 004301265099999  | 1949     | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78              | 1           | 99999999999  |
++------------------+----------+----------------------------------------------------+-----------------+-------------+--------------+--+
+5 rows selected (0.297 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from w1;
+INFO  : Compiling command(queryId=hive_20180701145757_6b8dbb39-efdd-4215-aa57-3fe06571df64): select * from w1
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:w1.data1, type:string, comment:null), FieldSchema(name:w1.year, type:int, comment:null), FieldSchema(name:w1.data2, type:string, comment:null), FieldSchema(name:w1.temperature, type:int, comment:null), FieldSchema(name:w1.quality, type:tinyint, comment:null), FieldSchema(name:w1.data3, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145757_6b8dbb39-efdd-4215-aa57-3fe06571df64); Time taken: 0.146 seconds
+INFO  : Executing command(queryId=hive_20180701145757_6b8dbb39-efdd-4215-aa57-3fe06571df64): select * from w1
+INFO  : Completed executing command(queryId=hive_20180701145757_6b8dbb39-efdd-4215-aa57-3fe06571df64); Time taken: 0.003 seconds
+INFO  : OK
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+|     w1.data1     | w1.year  |                      w1.data2                      | w1.temperature  | w1.quality  |    w1.data3    |
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | +99999999999   |
+| 004301265099999  | 1949     | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111             | 1           | +99999999999   |
+| 004301265099999  | 1949     | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78              | 1           | +99999999999   |
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+5 rows selected (0.296 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> dfs -ls hiveInput;
++----------------------------------------------------+--+
+|                     DFS Output                     |
++----------------------------------------------------+--+
+| Found 1 items                                      |
+| -rw-rwx---+  3 lz1714 users        559 2018-07-01 14:41 hiveInput/smallWeather1.txt |
++----------------------------------------------------+--+
+2 rows selected (0.008 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> dfs -cat hiveInput/smallWeather1.txt;
++----------------------------------------------------+--+
+|                     DFS Output                     |
++----------------------------------------------------+--+
+| 006701199099999,1950,051507004888888888888888888888888888888888888888888888888889999999N9,+0000,1,+99999999999  |
+| 004301199099999,1950,051512004888888888888888888888888888888888888888888888888889999999N9,+0022,1,+99999999999  |
+| 004301199099999,1950,051518004888888888888888888888888888888888888888888888888889999999N9,-0011,1,+99999999999  |
+| 004301265099999,1949,032412004888888888888888888888888888888888888888888888888880500001N9,+0111,1,+99999999999  |
+| 004301265099999,1949,032418004888888888888888888888888888888888888888888888888880500001N9,+0078,1,+99999999999 |
++----------------------------------------------------+--+
+5 rows selected (0.006 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> dfs -cp hiveInput/smallWeather1.txt hiveInput/smallWeather2.txt;
++-------------+--+
+| DFS Output  |
++-------------+--+
++-------------+--+
+No rows selected (0.147 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> dfs -ls hiveInput;
++----------------------------------------------------+--+
+|                     DFS Output                     |
++----------------------------------------------------+--+
+| Found 2 items                                      |
+| -rw-rwx---+  3 lz1714 users        559 2018-07-01 14:41 hiveInput/smallWeather1.txt |
+| -rw-------+  3 lz1714 users        559 2018-07-01 14:58 hiveInput/smallWeather2.txt |
++----------------------------------------------------+--+
+3 rows selected (0.007 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> dfs -cp hiveInput/smallWeather1.txt hiveInput/smallWeather3.txt;
++-------------+--+
+| DFS Output  |
++-------------+--+
++-------------+--+
+No rows selected (0.205 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> dfs -ls hiveInput;
++----------------------------------------------------+--+
+|                     DFS Output                     |
++----------------------------------------------------+--+
+| Found 3 items                                      |
+| -rw-rwx---+  3 lz1714 users        559 2018-07-01 14:41 hiveInput/smallWeather1.txt |
+| -rw-------+  3 lz1714 users        559 2018-07-01 14:58 hiveInput/smallWeather2.txt |
+| -rw-------+  3 lz1714 users        559 2018-07-01 14:58 hiveInput/smallWeather3.txt |
++----------------------------------------------------+--+
+4 rows selected (0.007 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from w3;
+INFO  : Compiling command(queryId=hive_20180701145959_2a3dbeee-dbf0-49e0-a027-8d2907a07464): select * from w3
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:w3.data1, type:string, comment:null), FieldSchema(name:w3.year, type:int, comment:null), FieldSchema(name:w3.data2, type:string, comment:null), FieldSchema(name:w3.temperature, type:int, comment:null), FieldSchema(name:w3.quality, type:tinyint, comment:null), FieldSchema(name:w3.nines, type:bigint, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145959_2a3dbeee-dbf0-49e0-a027-8d2907a07464); Time taken: 0.245 seconds
+INFO  : Executing command(queryId=hive_20180701145959_2a3dbeee-dbf0-49e0-a027-8d2907a07464): select * from w3
+INFO  : Completed executing command(queryId=hive_20180701145959_2a3dbeee-dbf0-49e0-a027-8d2907a07464); Time taken: 0.004 seconds
+INFO  : OK
++------------------+----------+----------------------------------------------------+-----------------+-------------+--------------+--+
+|     w3.data1     | w3.year  |                      w3.data2                      | w3.temperature  | w3.quality  |   w3.nines   |
++------------------+----------+----------------------------------------------------+-----------------+-------------+--------------+--+
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | NULL         |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | NULL         |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | NULL         |
+| 004301265099999  | 1949     | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111             | 1           | NULL         |
+| 004301265099999  | 1949     | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78              | 1           | 99999999999  |
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | NULL         |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | NULL         |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | NULL         |
+| 004301265099999  | 1949     | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111             | 1           | NULL         |
+| 004301265099999  | 1949     | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78              | 1           | 99999999999  |
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | NULL         |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | NULL         |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | NULL         |
+| 004301265099999  | 1949     | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111             | 1           | NULL         |
+| 004301265099999  | 1949     | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78              | 1           | 99999999999  |
++------------------+----------+----------------------------------------------------+-----------------+-------------+--------------+--+
+15 rows selected (0.451 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from w1;
+INFO  : Compiling command(queryId=hive_20180701145959_9712858a-666f-47a3-94fe-1c00f211a729): select * from w1
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:w1.data1, type:string, comment:null), FieldSchema(name:w1.year, type:int, comment:null), FieldSchema(name:w1.data2, type:string, comment:null), FieldSchema(name:w1.temperature, type:int, comment:null), FieldSchema(name:w1.quality, type:tinyint, comment:null), FieldSchema(name:w1.data3, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701145959_9712858a-666f-47a3-94fe-1c00f211a729); Time taken: 0.147 seconds
+INFO  : Executing command(queryId=hive_20180701145959_9712858a-666f-47a3-94fe-1c00f211a729): select * from w1
+INFO  : Completed executing command(queryId=hive_20180701145959_9712858a-666f-47a3-94fe-1c00f211a729); Time taken: 0.004 seconds
+INFO  : OK
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+|     w1.data1     | w1.year  |                      w1.data2                      | w1.temperature  | w1.quality  |    w1.data3    |
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | +99999999999   |
+| 004301265099999  | 1949     | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111             | 1           | +99999999999   |
+| 004301265099999  | 1949     | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78              | 1           | +99999999999   |
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | +99999999999   |
+| 004301265099999  | 1949     | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111             | 1           | +99999999999   |
+| 004301265099999  | 1949     | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78              | 1           | +99999999999   |
+| 006701199099999  | 1950     | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0               | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22              | 1           | +99999999999   |
+| 004301199099999  | 1950     | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11             | 1           | +99999999999   |
+| 004301265099999  | 1949     | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111             | 1           | +99999999999   |
+| 004301265099999  | 1949     | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78              | 1           | +99999999999   |
++------------------+----------+----------------------------------------------------+-----------------+-------------+----------------+--+
+15 rows selected (0.296 seconds)
+
+
+=======================================================================
+Using impala
+=======================================================================
+[lz1714@login-2-1 ~]$ hdfs dfs -setfacl -m default:user:impala:rwx /user/lz1714
+[lz1714@login-2-1 ~]$ hdfs dfs -setfacl -m user:impala:rwx /user/lz1714
+[lz1714@login-2-1 ~]$ hdfs dfs -cat hiveInput/smallWeather1.txt
+006701199099999,1950,051507004888888888888888888888888888888888888888888888888889999999N9,+0000,1,+99999999999
+004301199099999,1950,051512004888888888888888888888888888888888888888888888888889999999N9,+0022,1,+99999999999
+004301199099999,1950,051518004888888888888888888888888888888888888888888888888889999999N9,-0011,1,+99999999999
+004301265099999,1949,032412004888888888888888888888888888888888888888888888888880500001N9,+0111,1,+99999999999
+004301265099999,1949,032418004888888888888888888888888888888888888888888888888880500001N9,+0078,1,+99999999999
+[lz1714@login-2-1 ~]$ beeline
+Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=512M; support was removed in 8.0
+Java HotSpot(TM) 64-Bit Server VM warning: Using incremental CMS is deprecated and will likely be removed in a future release
+Java HotSpot(TM) 64-Bit Server VM warning: ignoring option MaxPermSize=512M; support was removed in 8.0
+Beeline version 1.1.0-cdh5.11.1 by Apache Hive
+beeline> !connect jdbc:hive2://babar.es.its.nyu.edu:10000/
+scan complete in 1ms
+Connecting to jdbc:hive2://babar.es.its.nyu.edu:10000/
+Enter username for jdbc:hive2://babar.es.its.nyu.edu:10000/: lz1714
+Enter password for jdbc:hive2://babar.es.its.nyu.edu:10000/: ************
+Connected to: Apache Hive (version 1.1.0-cdh5.11.1)
+Driver: Hive JDBC (version 1.1.0-cdh5.11.1)
+Transaction isolation: TRANSACTION_REPEATABLE_READ
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> use lz1714;
+INFO  : Compiling command(queryId=hive_20180701175353_19ee3cdf-3610-482e-b3cd-8ad051964426): use lz1714
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701175353_19ee3cdf-3610-482e-b3cd-8ad051964426); Time taken: 0.015 seconds
+INFO  : Executing command(queryId=hive_20180701175353_19ee3cdf-3610-482e-b3cd-8ad051964426): use lz1714
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701175353_19ee3cdf-3610-482e-b3cd-8ad051964426); Time taken: 0.006 seconds
+INFO  : OK
+No rows affected (0.068 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> show tables;
+INFO  : Compiling command(queryId=hive_20180701175353_4345c5fe-7c46-4930-8da8-a93349a60a06): show tables
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:tab_name, type:string, comment:from deserializer)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701175353_4345c5fe-7c46-4930-8da8-a93349a60a06); Time taken: 0.001 seconds
+INFO  : Executing command(queryId=hive_20180701175353_4345c5fe-7c46-4930-8da8-a93349a60a06): show tables
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180701175353_4345c5fe-7c46-4930-8da8-a93349a60a06); Time taken: 0.013 seconds
+INFO  : OK
++-----------+--+
+| tab_name  |
++-----------+--+
+| w1        |
+| w3        |
++-----------+--+
+2 rows selected (0.046 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select distinct year from w1;
+INFO  : Compiling command(queryId=hive_20180701180101_58150807-ef52-4b35-a8ab-002a0e9dc0d0): select distinct year from w1
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:year, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701180101_58150807-ef52-4b35-a8ab-002a0e9dc0d0); Time taken: 0.195 seconds
+INFO  : Executing command(queryId=hive_20180701180101_58150807-ef52-4b35-a8ab-002a0e9dc0d0): select distinct year from w1
+INFO  : Query ID = hive_20180701180101_58150807-ef52-4b35-a8ab-002a0e9dc0d0
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks not specified. Estimated from input data size: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :   set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :   set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :   set mapreduce.job.reduces=<number>
+INFO  : number of splits:3
+INFO  : Submitting tokens for job: job_1528077494936_3622
+INFO  : The url to track the job: http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_3622/
+INFO  : Starting Job = job_1528077494936_3622, Tracking URL = http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_3622/
+INFO  : Kill Command = /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop/bin/hadoop job  -kill job_1528077494936_3622
+INFO  : Hadoop job information for Stage-1: number of mappers: 3; number of reducers: 1
+INFO  : 2018-07-01 18:01:47,895 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-01 18:01:52,048 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.8 sec
+INFO  : 2018-07-01 18:01:59,259 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 7.66 sec
+INFO  : MapReduce Total cumulative CPU time: 7 seconds 660 msec
+INFO  : Ended Job = job_1528077494936_3622
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 3  Reduce: 1   Cumulative CPU: 7.66 sec   HDFS Read: 14949 HDFS Write: 10 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 7 seconds 660 msec
+INFO  : Completed executing command(queryId=hive_20180701180101_58150807-ef52-4b35-a8ab-002a0e9dc0d0); Time taken: 20.592 seconds
+INFO  : OK
++-------+--+
+| year  |
++-------+--+
+| 1949  |
+| 1950  |
++-------+--+
+2 rows selected (20.933 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select distinct year from w1;
+INFO  : Compiling command(queryId=hive_20180701180202_eccbdb18-a6a0-4815-aa9f-e85d53b8f920): select distinct year from w1
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:year, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180701180202_eccbdb18-a6a0-4815-aa9f-e85d53b8f920); Time taken: 0.165 seconds
+INFO  : Executing command(queryId=hive_20180701180202_eccbdb18-a6a0-4815-aa9f-e85d53b8f920): select distinct year from w1
+INFO  : Query ID = hive_20180701180202_eccbdb18-a6a0-4815-aa9f-e85d53b8f920
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks not specified. Estimated from input data size: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :   set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :   set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :   set mapreduce.job.reduces=<number>
+INFO  : number of splits:3
+INFO  : Submitting tokens for job: job_1528077494936_3623
+INFO  : The url to track the job: http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_3623/
+INFO  : Starting Job = job_1528077494936_3623, Tracking URL = http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_3623/
+INFO  : Kill Command = /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop/bin/hadoop job  -kill job_1528077494936_3623
+INFO  : Hadoop job information for Stage-1: number of mappers: 3; number of reducers: 1
+INFO  : 2018-07-01 18:02:11,821 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-01 18:02:15,913 Stage-1 map = 33%,  reduce = 0%, Cumulative CPU 1.53 sec
+INFO  : 2018-07-01 18:02:16,936 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 4.68 sec
+INFO  : 2018-07-01 18:02:21,114 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 7.17 sec
+INFO  : MapReduce Total cumulative CPU time: 7 seconds 170 msec
+INFO  : Ended Job = job_1528077494936_3623
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 3  Reduce: 1   Cumulative CPU: 7.17 sec   HDFS Read: 14949 HDFS Write: 10 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 7 seconds 170 msec
+INFO  : Completed executing command(queryId=hive_20180701180202_eccbdb18-a6a0-4815-aa9f-e85d53b8f920); Time taken: 18.2 seconds
+INFO  : OK
++-------+--+
+| year  |
++-------+--+
+| 1949  |
+| 1950  |
++-------+--+
+2 rows selected (18.764 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/>
+
+-----------------
+[lz1714@login-2-1 ~]$ impala-shell
+Starting Impala Shell without Kerberos authentication
+Error connecting: TTransportException, Could not connect to login-2-1.local:21000
+***********************************************************************************
+Welcome to the Impala shell.
+(Impala Shell v2.8.0-cdh5.11.1 (3382c1c) built on Thu Jun  1 10:36:12 PDT 2017)
+
+You can run a single query from the command line using the '-q' option.
+***********************************************************************************
+[Not connected] > connect compute-1-1;
+Connected to compute-1-1:21000
+Server version: impalad version 2.8.0-cdh5.11.1 RELEASE (build 3382c1c488dff12d5ca8d049d2b59babee605b4e)
+[compute-1-1:21000] > use lz1714;
+Query: use lz1714
+[compute-1-1:21000] > show tables;
+Query: show tables
++------+
+| name |
++------+
+| w1   |
+| w3   |
++------+
+Fetched 2 row(s) in 0.01s
+[compute-1-1:21000] > invalidate metadata;
+Query: invalidate metadata
+Query submitted at: 2018-07-01 17:55:15 (Coordinator: http://compute-1-1.local:25000)
+Query progress can be monitored at: http://compute-1-1.local:25000/query_plan?query_id=8a4fdf08d2e345b1:d332da7800000000
+
+Fetched 0 row(s) in 3.65s
+[compute-1-1:21000] > show tables;
+Query: show tables
++------+
+| name |
++------+
+| w1   |
+| w3   |
++------+
+Fetched 2 row(s) in 0.01s
+[compute-1-1:21000] > create database lz1714_imp;
+Query: create database lz1714_imp
+
+Fetched 0 row(s) in 0.11s
+[compute-1-1:21000] > use lz1714_imp;
+Query: use lz1714_imp
+[compute-1-1:21000] > show tables;
+Query: show tables
+
+Fetched 0 row(s) in 0.01s
+[compute-1-1:21000] > create external table w10 (data1 string, year int, data2 string, temperature int, quality tinyint, data3 string)
+                    > row format delimited fields terminated by ','
+                    > location '/user/<netId>/impalaInput/';
+Query: create external table w10 (data1 string, year int, data2 string, temperature int, quality tinyint, data3 string)
+row format delimited fields terminated by ','
+location '/user/<netId>/impalaInput/'
+ERROR:
+ImpalaRuntimeException: Error making 'createTable' RPC to Hive Metastore:
+CAUSED BY: MetaException: Got exception: org.apache.hadoop.security.AccessControlException Permission denied: user=impala, access=WRITE, inode="/user":eugenetestuser1:users:drwxr-xr-x
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkFsPermission(DefaultAuthorizationProvider.java:279)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.check(DefaultAuthorizationProvider.java:260)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.check(DefaultAuthorizationProvider.java:240)
+	at org.apache.hadoop.hdfs.server.namenode.DefaultAuthorizationProvider.checkPermission(DefaultAuthorizationProvider.java:162)
+	at org.apache.hadoop.hdfs.server.namenode.FSPermissionChecker.checkPermission(FSPermissionChecker.java:152)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkPermission(FSDirectory.java:3529)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkPermission(FSDirectory.java:3512)
+	at org.apache.hadoop.hdfs.server.namenode.FSDirectory.checkAncestorAccess(FSDirectory.java:3494)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.checkAncestorAccess(FSNamesystem.java:6615)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.mkdirsInternal(FSNamesystem.java:4385)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.mkdirsInt(FSNamesystem.java:4355)
+	at org.apache.hadoop.hdfs.server.namenode.FSNamesystem.mkdirs(FSNamesystem.java:4328)
+	at org.apache.hadoop.hdfs.server.namenode.NameNodeRpcServer.mkdirs(NameNodeRpcServer.java:873)
+	at org.apache.hadoop.hdfs.server.namenode.AuthorizationProviderProxyClientProtocol.mkdirs(AuthorizationProviderProxyClientProtocol.java:323)
+	at org.apache.hadoop.hdfs.protocolPB.ClientNamenodeProtocolServerSideTranslatorPB.mkdirs(ClientNamenodeProtocolServerSideTranslatorPB.java:618)
+	at org.apache.hadoop.hdfs.protocol.proto.ClientNamenodeProtocolProtos$ClientNamenodeProtocol$2.callBlockingMethod(ClientNamenodeProtocolProtos.java)
+	at org.apache.hadoop.ipc.ProtobufRpcEngine$Server$ProtoBufRpcInvoker.call(ProtobufRpcEngine.java:617)
+	at org.apache.hadoop.ipc.RPC$Server.call(RPC.java:1073)
+	at org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2220)
+	at org.apache.hadoop.ipc.Server$Handler$1.run(Server.java:2216)
+	at java.security.AccessController.doPrivileged(Native Method)
+	at javax.security.auth.Subject.doAs(Subject.java:422)
+	at org.apache.hadoop.security.UserGroupInformation.doAs(UserGroupInformation.java:1920)
+	at org.apache.hadoop.ipc.Server$Handler.run(Server.java:2214)
+
+
+[compute-1-1:21000] > create external table w10 (data1 string, year int, data2 string, temperature int, quality tinyint, data3 string)
+row format delimited fields terminated by ','
+location '/user/lz1714/impalaInput/';
+Query: create external table w10 (data1 string, year int, data2 string, temperature int, quality tinyint, data3 string)
+row format delimited fields terminated by ','
+location '/user/lz1714/impalaInput/'
+
+Fetched 0 row(s) in 0.05s
+[compute-1-1:21000] > show tables;
+Query: show tables
++------+
+| name |
++------+
+| w10  |
++------+
+Fetched 1 row(s) in 0.01s
+[compute-1-1:21000] > describe w10;
+Query: describe w10
++-------------+---------+---------+
+| name        | type    | comment |
++-------------+---------+---------+
+| data1       | string  |         |
+| year        | int     |         |
+| data2       | string  |         |
+| temperature | int     |         |
+| quality     | tinyint |         |
+| data3       | string  |         |
++-------------+---------+---------+
+Fetched 6 row(s) in 4.97s
+[compute-1-1:21000] > select * from w10;
+Query: select * from w10
+Query submitted at: 2018-07-01 17:59:18 (Coordinator: http://compute-1-1.local:25000)
+Query progress can be monitored at: http://compute-1-1.local:25000/query_plan?query_id=9f4346416032e5b2:ab8f2f5b00000000
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+| data1           | year | data2                                                                | temperature | quality | data3         |
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+| 006701199099999 | 1950 | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0           | 1       | +99999999999  |
+| 004301199099999 | 1950 | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22          | 1       | +99999999999  |
+| 004301199099999 | 1950 | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11         | 1       | +99999999999  |
+| 004301265099999 | 1949 | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111         | 1       | +99999999999  |
+| 004301265099999 | 1949 | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78          | 1       | +99999999999  |
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+Fetched 5 row(s) in 0.12s
+[compute-1-1:21000] > select * from w10 limit 2;
+Query: select * from w10 limit 2
+Query submitted at: 2018-07-01 17:59:26 (Coordinator: http://compute-1-1.local:25000)
+Query progress can be monitored at: http://compute-1-1.local:25000/query_plan?query_id=2a4fc22160bb70ab:3f86d3e300000000
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+| data1           | year | data2                                                                | temperature | quality | data3         |
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+| 006701199099999 | 1950 | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0           | 1       | +99999999999  |
+| 004301199099999 | 1950 | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22          | 1       | +99999999999  |
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+Fetched 2 row(s) in 0.02s
+[compute-1-1:21000] > select year from w10;
+Query: select year from w10
+Query submitted at: 2018-07-01 17:59:34 (Coordinator: http://compute-1-1.local:25000)
+Query progress can be monitored at: http://compute-1-1.local:25000/query_plan?query_id=6f46559aeab23c54:414c6e4900000000
++------+
+| year |
++------+
+| 1950 |
+| 1950 |
+| 1950 |
+| 1949 |
+| 1949 |
++------+
+Fetched 5 row(s) in 0.12s
+[compute-1-1:21000] > select * from w10 where year > 1949;
+Query: select * from w10 where year > 1949
+Query submitted at: 2018-07-01 17:59:44 (Coordinator: http://compute-1-1.local:25000)
+Query progress can be monitored at: http://compute-1-1.local:25000/query_plan?query_id=7442b9a464aa4bdc:4cf0fb3100000000
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+| data1           | year | data2                                                                | temperature | quality | data3         |
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+| 006701199099999 | 1950 | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0           | 1       | +99999999999  |
+| 004301199099999 | 1950 | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22          | 1       | +99999999999  |
+| 004301199099999 | 1950 | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11         | 1       | +99999999999  |
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+Fetched 3 row(s) in 0.12s
+[compute-1-1:21000] > select * from w10 where year >= 1949;
+Query: select * from w10 where year >= 1949
+Query submitted at: 2018-07-01 17:59:52 (Coordinator: http://compute-1-1.local:25000)
+Query progress can be monitored at: http://compute-1-1.local:25000/query_plan?query_id=4d4706d14abec780:d4e741f400000000
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+| data1           | year | data2                                                                | temperature | quality | data3         |
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+| 006701199099999 | 1950 | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0           | 1       | +99999999999  |
+| 004301199099999 | 1950 | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22          | 1       | +99999999999  |
+| 004301199099999 | 1950 | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11         | 1       | +99999999999  |
+| 004301265099999 | 1949 | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111         | 1       | +99999999999  |
+| 004301265099999 | 1949 | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78          | 1       | +99999999999  |
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+Fetched 5 row(s) in 0.12s
+[compute-1-1:21000] > select distinct year from w10;
+Query: select distinct year from w10
+Query submitted at: 2018-07-01 18:00:01 (Coordinator: http://compute-1-1.local:25000)
+Query progress can be monitored at: http://compute-1-1.local:25000/query_plan?query_id=ab4534b4adb85f5c:2caf8e0400000000
++------+
+| year |
++------+
+| 1950 |
+| 1949 |
++------+
+Fetched 2 row(s) in 0.12s
+[compute-1-1:21000] > create external table w11 (data1 string, year int, data2 string, temperature int, quality tinyint, data3 string)
+                    > row format delimited fields terminated by ','
+                    > location '/user/lz1714/impalaInput/';
+Query: create external table w11 (data1 string, year int, data2 string, temperature int, quality tinyint, data3 string)
+row format delimited fields terminated by ','
+location '/user/lz1714/impalaInput/'
+
+Fetched 0 row(s) in 0.05s
+[compute-1-1:21000] > select distinct year from w11;
+Query: select distinct year from w11
+Query submitted at: 2018-07-01 18:01:03 (Coordinator: http://compute-1-1.local:25000)
+Query progress can be monitored at: http://compute-1-1.local:25000/query_plan?query_id=6448dcb80e8d474:9880d81700000000
++------+
+| year |
++------+
+| 1950 |
+| 1949 |
++------+
+Fetched 2 row(s) in 4.20s
+[compute-1-1:21000] > select distinct year from w11;
+Query: select distinct year from w11
+Query submitted at: 2018-07-01 18:01:17 (Coordinator: http://compute-1-1.local:25000)
+Query progress can be monitored at: http://compute-1-1.local:25000/query_plan?query_id=17457f356409a352:3e2dde3600000000
++------+
+| year |
++------+
+| 1950 |
+| 1949 |
++------+
+Fetched 2 row(s) in 0.12s
+[compute-1-1:21000] > select w.year, w.temp from (select year, max(temperature) as temp from w10 group by year) w;
+Query: select w.year, w.temp from (select year, max(temperature) as temp from w10 group by year) w
+Query submitted at: 2018-07-01 18:02:40 (Coordinator: http://compute-1-1.local:25000)
+Query progress can be monitored at: http://compute-1-1.local:25000/query_plan?query_id=f9490832f2effbc2:e447250400000000
++------+------+
+| year | temp |
++------+------+
+| 1950 | 22   |
+| 1949 | 111  |
++------+------+
+Fetched 2 row(s) in 0.12s
+[compute-1-1:21000] > create external table w30 (data1 string, year int, data2 string, temperature int, quality tinyint, nines bigint)
+                    > row format delimited fields terminated by ','
+                    > location '/user/lz1714/impalaInput/';
+Query: create external table w30 (data1 string, year int, data2 string, temperature int, quality tinyint, nines bigint)
+row format delimited fields terminated by ','
+location '/user/lz1714/impalaInput/'
+
+Fetched 0 row(s) in 0.09s
+[compute-1-1:21000] > select * from w30;
+Query: select * from w30
+Query submitted at: 2018-07-01 18:03:44 (Coordinator: http://compute-1-1.local:25000)
+Query progress can be monitored at: http://compute-1-1.local:25000/query_plan?query_id=9a4a02272b5ce64f:f3dbad0a00000000
++-----------------+------+----------------------------------------------------------------------+-------------+---------+-------------+
+| data1           | year | data2                                                                | temperature | quality | nines       |
++-----------------+------+----------------------------------------------------------------------+-------------+---------+-------------+
+| 006701199099999 | 1950 | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0           | 1       | 99999999999 |
+| 004301199099999 | 1950 | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22          | 1       | 99999999999 |
+| 004301199099999 | 1950 | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11         | 1       | 99999999999 |
+| 004301265099999 | 1949 | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111         | 1       | 99999999999 |
+| 004301265099999 | 1949 | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78          | 1       | 99999999999 |
++-----------------+------+----------------------------------------------------------------------+-------------+---------+-------------+
+Fetched 5 row(s) in 5.77s
+[compute-1-1:21000] > select * from w10;
+Query: select * from w10
+Query submitted at: 2018-07-01 18:03:52 (Coordinator: http://compute-1-1.local:25000)
+Query progress can be monitored at: http://compute-1-1.local:25000/query_plan?query_id=604f0c018b129522:10df7a7700000000
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+| data1           | year | data2                                                                | temperature | quality | data3         |
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+| 006701199099999 | 1950 | 051507004888888888888888888888888888888888888888888888888889999999N9 | 0           | 1       | +99999999999  |
+| 004301199099999 | 1950 | 051512004888888888888888888888888888888888888888888888888889999999N9 | 22          | 1       | +99999999999  |
+| 004301199099999 | 1950 | 051518004888888888888888888888888888888888888888888888888889999999N9 | -11         | 1       | +99999999999  |
+| 004301265099999 | 1949 | 032412004888888888888888888888888888888888888888888888888880500001N9 | 111         | 1       | +99999999999  |
+| 004301265099999 | 1949 | 032418004888888888888888888888888888888888888888888888888880500001N9 | 78          | 1       | +99999999999  |
++-----------------+------+----------------------------------------------------------------------+-------------+---------+---------------+
+Fetched 5 row(s) in 0.12s
+[compute-1-1:21000] > describe w30;
+Query: describe w30
++-------------+---------+---------+
+| name        | type    | comment |
++-------------+---------+---------+
+| data1       | string  |         |
+| year        | int     |         |
+| data2       | string  |         |
+| temperature | int     |         |
+| quality     | tinyint |         |
+| nines       | bigint  |         |
++-------------+---------+---------+
+Fetched 6 row(s) in 0.01s
+[compute-1-1:21000] > describe w10;
+Query: describe w10
++-------------+---------+---------+
+| name        | type    | comment |
++-------------+---------+---------+
+| data1       | string  |         |
+| year        | int     |         |
+| data2       | string  |         |
+| temperature | int     |         |
+| quality     | tinyint |         |
+| data3       | string  |         |
++-------------+---------+---------+
+Fetched 6 row(s) in 0.01s
+[compute-1-1:21000] > Goodbye lz1714
+[lz1714@login-2-1 ~]$ hdfs dfs -chmod 700 /user/lz1714
+[lz1714@login-2-1 ~]$ 
