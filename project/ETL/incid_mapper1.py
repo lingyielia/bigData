@@ -26,7 +26,7 @@ def process(data, start_room):
 
 
     if is_start:
-        start_room.append((subject, station, time, message))
+        start_room.insert(0, (subject, station, time, message))
         # print(len(start_room))
     if is_end:
         temp = (subject, station, time, message)
