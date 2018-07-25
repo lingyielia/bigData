@@ -1,0 +1,774 @@
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> create database full;
+INFO  : Compiling command(queryId=hive_20180724114545_9a6e0c4f-be5a-4462-8e64-ee10c7d5c2ad): create database full
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724114545_9a6e0c4f-be5a-4462-8e64-ee10c7d5c2ad); Time taken: 0.002 seconds
+INFO  : Executing command(queryId=hive_20180724114545_9a6e0c4f-be5a-4462-8e64-ee10c7d5c2ad): create database full
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180724114545_9a6e0c4f-be5a-4462-8e64-ee10c7d5c2ad); Time taken: 0.127 seconds
+INFO  : OK
+No rows affected (0.173 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> use full;
+INFO  : Compiling command(queryId=hive_20180724114545_71f4f9c2-2c57-4d4d-bd0a-461a8b801d88): use full
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724114545_71f4f9c2-2c57-4d4d-bd0a-461a8b801d88); Time taken: 0.004 seconds
+INFO  : Executing command(queryId=hive_20180724114545_71f4f9c2-2c57-4d4d-bd0a-461a8b801d88): use full
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180724114545_71f4f9c2-2c57-4d4d-bd0a-461a8b801d88); Time taken: 0.004 seconds
+INFO  : OK
+No rows affected (0.012 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> CREATE EXTERNAL TABLE flow (
+. . . . . . . . . . . . . . . . . . . . . .>   station INT,
+. . . . . . . . . . . . . . . . . . . . . .>   time_of_day INT,
+. . . . . . . . . . . . . . . . . . . . . .>   day_of_week INT,
+. . . . . . . . . . . . . . . . . . . . . .>   flow_count INT,
+. . . . . . . . . . . . . . . . . . . . . .>   start_date STRING
+. . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+. . . . . . . . . . . . . . . . . . . . . .> LOCATION '/user/lz1714/project/hiveInput/full/flow';
+INFO  : Compiling command(queryId=hive_20180724114545_8400eac5-803f-4e5e-9217-a21140d5acc1): CREATE EXTERNAL TABLE flow (
+station INT,
+time_of_day INT,
+day_of_week INT,
+flow_count INT,
+start_date STRING
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+LOCATION '/user/lz1714/project/hiveInput/full/flow'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724114545_8400eac5-803f-4e5e-9217-a21140d5acc1); Time taken: 0.011 seconds
+INFO  : Executing command(queryId=hive_20180724114545_8400eac5-803f-4e5e-9217-a21140d5acc1): CREATE EXTERNAL TABLE flow (
+station INT,
+time_of_day INT,
+day_of_week INT,
+flow_count INT,
+start_date STRING
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+LOCATION '/user/lz1714/project/hiveInput/full/flow'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180724114545_8400eac5-803f-4e5e-9217-a21140d5acc1); Time taken: 0.078 seconds
+INFO  : OK
+No rows affected (0.146 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from flow limit 1;
+INFO  : Compiling command(queryId=hive_20180724114646_d7586d1e-26cb-44b2-9647-1794fdd56e19): select * from flow limit 1
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:flow.station, type:int, comment:null), FieldSchema(name:flow.time_of_day, type:int, comment:null), FieldSchema(name:flow.day_of_week, type:int, comment:null), FieldSchema(name:flow.flow_count, type:int, comment:null), FieldSchema(name:flow.start_date, type:string, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724114646_d7586d1e-26cb-44b2-9647-1794fdd56e19); Time taken: 0.264 seconds
+INFO  : Executing command(queryId=hive_20180724114646_d7586d1e-26cb-44b2-9647-1794fdd56e19): select * from flow limit 1
+INFO  : Completed executing command(queryId=hive_20180724114646_d7586d1e-26cb-44b2-9647-1794fdd56e19); Time taken: 0.003 seconds
+INFO  : OK
++---------------+-------------------+-------------------+------------------+------------------+--+
+| flow.station  | flow.time_of_day  | flow.day_of_week  | flow.flow_count  | flow.start_date  |
++---------------+-------------------+-------------------+------------------+------------------+--+
+| 0             | 1                 | 1                 | 2                | 02232016         |
++---------------+-------------------+-------------------+------------------+------------------+--+
+1 row selected (0.43 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> CREATE EXTERNAL TABLE incident (
+. . . . . . . . . . . . . . . . . . . . . .>   station INT,
+. . . . . . . . . . . . . . . . . . . . . .>   day_of_week INT,
+. . . . . . . . . . . . . . . . . . . . . .>   type STRING,
+. . . . . . . . . . . . . . . . . . . . . .>   time_of_day INT,
+. . . . . . . . . . . . . . . . . . . . . .>   start_date STRING
+. . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+. . . . . . . . . . . . . . . . . . . . . .> LOCATION '/user/lz1714/project/hiveInput/full/incid';
+INFO  : Compiling command(queryId=hive_20180724114646_1b2ad5e0-7af1-4261-8477-26a66dd6cbe2): CREATE EXTERNAL TABLE incident (
+station INT,
+day_of_week INT,
+type STRING,
+time_of_day INT,
+start_date STRING
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+LOCATION '/user/lz1714/project/hiveInput/full/incid'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724114646_1b2ad5e0-7af1-4261-8477-26a66dd6cbe2); Time taken: 0.002 seconds
+INFO  : Executing command(queryId=hive_20180724114646_1b2ad5e0-7af1-4261-8477-26a66dd6cbe2): CREATE EXTERNAL TABLE incident (
+station INT,
+day_of_week INT,
+type STRING,
+time_of_day INT,
+start_date STRING
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+LOCATION '/user/lz1714/project/hiveInput/full/incid'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180724114646_1b2ad5e0-7af1-4261-8477-26a66dd6cbe2); Time taken: 0.024 seconds
+INFO  : OK
+No rows affected (0.076 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> CREATE EXTERNAL TABLE incident_count (
+. . . . . . . . . . . . . . . . . . . . . .>   station INT,
+. . . . . . . . . . . . . . . . . . . . . .>   day_of_week INT,
+. . . . . . . . . . . . . . . . . . . . . .>   time_of_day INT,
+. . . . . . . . . . . . . . . . . . . . . .>   start_date STRING,
+. . . . . . . . . . . . . . . . . . . . . .>   incid_cnt INT
+. . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+INFO  : Compiling command(queryId=hive_20180724114646_15669402-c71a-433d-a5b3-62ac3de68d31): CREATE EXTERNAL TABLE incident_count (
+station INT,
+day_of_week INT,
+time_of_day INT,
+start_date STRING,
+incid_cnt INT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724114646_15669402-c71a-433d-a5b3-62ac3de68d31); Time taken: 0.003 seconds
+INFO  : Executing command(queryId=hive_20180724114646_15669402-c71a-433d-a5b3-62ac3de68d31): CREATE EXTERNAL TABLE incident_count (
+station INT,
+day_of_week INT,
+time_of_day INT,
+start_date STRING,
+incid_cnt INT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180724114646_15669402-c71a-433d-a5b3-62ac3de68d31); Time taken: 0.106 seconds
+INFO  : OK
+No rows affected (0.159 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> INSERT OVERWRITE TABLE incident_count
+. . . . . . . . . . . . . . . . . . . . . .> SELECT station,
+. . . . . . . . . . . . . . . . . . . . . .>        MIN(day_of_week) AS day_of_week,
+. . . . . . . . . . . . . . . . . . . . . .>        time_of_day,
+. . . . . . . . . . . . . . . . . . . . . .>        start_date,
+. . . . . . . . . . . . . . . . . . . . . .>        COUNT(*) AS incid_cnt
+. . . . . . . . . . . . . . . . . . . . . .> FROM incident
+. . . . . . . . . . . . . . . . . . . . . .> GROUP BY station, time_of_day, start_date
+. . . . . . . . . . . . . . . . . . . . . .> GROUPING SETS((station, time_of_day, start_date));
+INFO  : Compiling command(queryId=hive_20180724114646_4740fe15-4987-4cf3-ab7f-5147d14a808d): INSERT OVERWRITE TABLE incident_count
+SELECT station,
+MIN(day_of_week) AS day_of_week,
+time_of_day,
+start_date,
+COUNT(*) AS incid_cnt
+FROM incident
+GROUP BY station, time_of_day, start_date
+GROUPING SETS((station, time_of_day, start_date))
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_col0, type:int, comment:null), FieldSchema(name:_col1, type:int, comment:null), FieldSchema(name:_col2, type:int, comment:null), FieldSchema(name:_col3, type:string, comment:null), FieldSchema(name:_col4, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724114646_4740fe15-4987-4cf3-ab7f-5147d14a808d); Time taken: 0.098 seconds
+INFO  : Executing command(queryId=hive_20180724114646_4740fe15-4987-4cf3-ab7f-5147d14a808d): INSERT OVERWRITE TABLE incident_count
+SELECT station,
+MIN(day_of_week) AS day_of_week,
+time_of_day,
+start_date,
+COUNT(*) AS incid_cnt
+FROM incident
+GROUP BY station, time_of_day, start_date
+GROUPING SETS((station, time_of_day, start_date))
+INFO  : Query ID = hive_20180724114646_4740fe15-4987-4cf3-ab7f-5147d14a808d
+INFO  : Total jobs = 1
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks not specified. Estimated from input data size: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :   set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :   set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :   set mapreduce.job.reduces=<number>
+INFO  : number of splits:1
+INFO  : Submitting tokens for job: job_1528077494936_6445
+INFO  : The url to track the job: http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_6445/
+INFO  : Starting Job = job_1528077494936_6445, Tracking URL = http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_6445/
+INFO  : Kill Command = /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop/bin/hadoop job  -kill job_1528077494936_6445
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 1
+INFO  : 2018-07-24 11:47:02,526 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 11:48:02,915 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 11:49:02,957 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 11:50:03,080 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 11:51:03,189 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 11:51:44,930 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 6.23 sec
+INFO  : 2018-07-24 11:51:52,070 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 12.73 sec
+INFO  : MapReduce Total cumulative CPU time: 12 seconds 730 msec
+INFO  : Ended Job = job_1528077494936_6445
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table full.incident_count from hdfs://dumbo/user/hive/warehouse/full.db/incident_count/.hive-staging_hive_2018-07-24_11-46-54_612_7588764330203838297-630/-ext-10000
+INFO  : Starting task [Stage-2:STATS] in serial mode
+INFO  : Table full.incident_count stats: [numFiles=1, numRows=8688, totalSize=160721, rawDataSize=152033]
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 1  Reduce: 1   Cumulative CPU: 12.73 sec   HDFS Read: 249697 HDFS Write: 160802 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 12 seconds 730 msec
+INFO  : Completed executing command(queryId=hive_20180724114646_4740fe15-4987-4cf3-ab7f-5147d14a808d); Time taken: 298.818 seconds
+INFO  : OK
+No rows affected (299.039 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> CREATE EXTERNAL TABLE merged (
+. . . . . . . . . . . . . . . . . . . . . .>   station INT,
+. . . . . . . . . . . . . . . . . . . . . .>   day_of_week INT,
+. . . . . . . . . . . . . . . . . . . . . .>   time_of_day INT,
+. . . . . . . . . . . . . . . . . . . . . .>   flow_count INT,
+. . . . . . . . . . . . . . . . . . . . . .>   start_date STRING,
+. . . . . . . . . . . . . . . . . . . . . .>   incid_cnt INT
+. . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+INFO  : Compiling command(queryId=hive_20180724115252_4c221515-7557-45d2-9c1f-ca43393bdcbd): CREATE EXTERNAL TABLE merged (
+station INT,
+day_of_week INT,
+time_of_day INT,
+flow_count INT,
+start_date STRING,
+incid_cnt INT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724115252_4c221515-7557-45d2-9c1f-ca43393bdcbd); Time taken: 0.002 seconds
+INFO  : Executing command(queryId=hive_20180724115252_4c221515-7557-45d2-9c1f-ca43393bdcbd): CREATE EXTERNAL TABLE merged (
+station INT,
+day_of_week INT,
+time_of_day INT,
+flow_count INT,
+start_date STRING,
+incid_cnt INT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180724115252_4c221515-7557-45d2-9c1f-ca43393bdcbd); Time taken: 0.128 seconds
+INFO  : OK
+No rows affected (0.178 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> INSERT OVERWRITE TABLE merged
+. . . . . . . . . . . . . . . . . . . . . .> SELECT f.station, f.day_of_week, f.time_of_day, f.flow_count, f.start_date, i.incid_cnt
+. . . . . . . . . . . . . . . . . . . . . .> FROM flow f LEFT OUTER JOIN incident_count i
+. . . . . . . . . . . . . . . . . . . . . .> ON (f.station = i.station AND f.time_of_day = i.time_of_day AND f.start_date = i.start_date);
+INFO  : Compiling command(queryId=hive_20180724115252_f52d86db-0148-47a2-86ef-e116278122d3): INSERT OVERWRITE TABLE merged
+SELECT f.station, f.day_of_week, f.time_of_day, f.flow_count, f.start_date, i.incid_cnt
+FROM flow f LEFT OUTER JOIN incident_count i
+ON (f.station = i.station AND f.time_of_day = i.time_of_day AND f.start_date = i.start_date)
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:f.station, type:int, comment:null), FieldSchema(name:f.day_of_week, type:int, comment:null), FieldSchema(name:f.time_of_day, type:int, comment:null), FieldSchema(name:f.flow_count, type:int, comment:null), FieldSchema(name:f.start_date, type:string, comment:null), FieldSchema(name:i.incid_cnt, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724115252_f52d86db-0148-47a2-86ef-e116278122d3); Time taken: 0.154 seconds
+INFO  : Executing command(queryId=hive_20180724115252_f52d86db-0148-47a2-86ef-e116278122d3): INSERT OVERWRITE TABLE merged
+SELECT f.station, f.day_of_week, f.time_of_day, f.flow_count, f.start_date, i.incid_cnt
+FROM flow f LEFT OUTER JOIN incident_count i
+ON (f.station = i.station AND f.time_of_day = i.time_of_day AND f.start_date = i.start_date)
+INFO  : Query ID = hive_20180724115252_f52d86db-0148-47a2-86ef-e116278122d3
+INFO  : Total jobs = 1
+INFO  : Starting task [Stage-5:MAPREDLOCAL] in serial mode
+INFO  : Execution completed successfully
+INFO  : MapredLocal task succeeded
+INFO  : Launching Job 1 out of 1
+INFO  : Starting task [Stage-4:MAPRED] in serial mode
+INFO  : Number of reduce tasks is set to 0 since there's no reduce operator
+INFO  : number of splits:7
+INFO  : Submitting tokens for job: job_1528077494936_6447
+INFO  : The url to track the job: http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_6447/
+INFO  : Starting Job = job_1528077494936_6447, Tracking URL = http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_6447/
+INFO  : Kill Command = /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop/bin/hadoop job  -kill job_1528077494936_6447
+INFO  : Hadoop job information for Stage-4: number of mappers: 7; number of reducers: 0
+INFO  : 2018-07-24 11:52:48,848 Stage-4 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 11:53:01,089 Stage-4 map = 14%,  reduce = 0%, Cumulative CPU 12.26 sec
+INFO  : 2018-07-24 11:53:08,231 Stage-4 map = 71%,  reduce = 0%, Cumulative CPU 124.82 sec
+INFO  : 2018-07-24 11:53:09,250 Stage-4 map = 100%,  reduce = 0%, Cumulative CPU 133.57 sec
+INFO  : MapReduce Total cumulative CPU time: 2 minutes 13 seconds 570 msec
+INFO  : Ended Job = job_1528077494936_6447
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table full.merged from hdfs://dumbo/user/hive/warehouse/full.db/merged/.hive-staging_hive_2018-07-24_11-52-38_847_3569720893336759786-630/-ext-10000
+INFO  : Starting task [Stage-2:STATS] in serial mode
+INFO  : Table full.merged stats: [numFiles=7, numRows=39693421, totalSize=897783805, rawDataSize=858090384]
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-4: Map: 7   Cumulative CPU: 133.57 sec   HDFS Read: 859341077 HDFS Write: 897784357 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 2 minutes 13 seconds 570 msec
+INFO  : Completed executing command(queryId=hive_20180724115252_f52d86db-0148-47a2-86ef-e116278122d3); Time taken: 32.684 seconds
+INFO  : OK
+No rows affected (33.059 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> CREATE EXTERNAL TABLE merged_final (
+. . . . . . . . . . . . . . . . . . . . . .>   station INT,
+. . . . . . . . . . . . . . . . . . . . . .>   day_of_week INT,
+. . . . . . . . . . . . . . . . . . . . . .>   time_of_day INT,
+. . . . . . . . . . . . . . . . . . . . . .>   flow_count INT,
+. . . . . . . . . . . . . . . . . . . . . .>   start_date STRING,
+. . . . . . . . . . . . . . . . . . . . . .>   incid_cnt INT,
+. . . . . . . . . . . . . . . . . . . . . .>   incid_ineff INT
+. . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+INFO  : Compiling command(queryId=hive_20180724115555_4f3ac7be-7573-4de3-86c5-763ea9228857): CREATE EXTERNAL TABLE merged_final (
+station INT,
+day_of_week INT,
+time_of_day INT,
+flow_count INT,
+start_date STRING,
+incid_cnt INT,
+incid_ineff INT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724115555_4f3ac7be-7573-4de3-86c5-763ea9228857); Time taken: 0.003 seconds
+INFO  : Executing command(queryId=hive_20180724115555_4f3ac7be-7573-4de3-86c5-763ea9228857): CREATE EXTERNAL TABLE merged_final (
+station INT,
+day_of_week INT,
+time_of_day INT,
+flow_count INT,
+start_date STRING,
+incid_cnt INT,
+incid_ineff INT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180724115555_4f3ac7be-7573-4de3-86c5-763ea9228857); Time taken: 0.115 seconds
+INFO  : OK
+No rows affected (0.16 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> INSERT OVERWRITE TABLE merged_final
+. . . . . . . . . . . . . . . . . . . . . .> SELECT station,
+. . . . . . . . . . . . . . . . . . . . . .>        day_of_week,
+. . . . . . . . . . . . . . . . . . . . . .>        time_of_day,
+. . . . . . . . . . . . . . . . . . . . . .>        flow_count,
+. . . . . . . . . . . . . . . . . . . . . .>        start_date,
+. . . . . . . . . . . . . . . . . . . . . .>        incid_cnt,
+. . . . . . . . . . . . . . . . . . . . . .>        CASE WHEN incid_cnt > 0 THEN 1
+. . . . . . . . . . . . . . . . . . . . . .>             ELSE                    0
+. . . . . . . . . . . . . . . . . . . . . .>         END incid_ineff
+. . . . . . . . . . . . . . . . . . . . . .> FROM merged;
+INFO  : Compiling command(queryId=hive_20180724115555_53c66b45-c85e-4d96-8af4-d7f382324753): INSERT OVERWRITE TABLE merged_final
+SELECT station,
+day_of_week,
+time_of_day,
+flow_count,
+start_date,
+incid_cnt,
+CASE WHEN incid_cnt > 0 THEN 1
+ELSE                    0
+END incid_ineff
+FROM merged
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:station, type:int, comment:null), FieldSchema(name:day_of_week, type:int, comment:null), FieldSchema(name:time_of_day, type:int, comment:null), FieldSchema(name:flow_count, type:int, comment:null), FieldSchema(name:start_date, type:string, comment:null), FieldSchema(name:incid_cnt, type:int, comment:null), FieldSchema(name:incid_ineff, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724115555_53c66b45-c85e-4d96-8af4-d7f382324753); Time taken: 0.179 seconds
+INFO  : Executing command(queryId=hive_20180724115555_53c66b45-c85e-4d96-8af4-d7f382324753): INSERT OVERWRITE TABLE merged_final
+SELECT station,
+day_of_week,
+time_of_day,
+flow_count,
+start_date,
+incid_cnt,
+CASE WHEN incid_cnt > 0 THEN 1
+ELSE                    0
+END incid_ineff
+FROM merged
+INFO  : Query ID = hive_20180724115555_53c66b45-c85e-4d96-8af4-d7f382324753
+INFO  : Total jobs = 3
+INFO  : Launching Job 1 out of 3
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks is set to 0 since there's no reduce operator
+INFO  : number of splits:9
+INFO  : Submitting tokens for job: job_1528077494936_6448
+INFO  : The url to track the job: http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_6448/
+INFO  : Starting Job = job_1528077494936_6448, Tracking URL = http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_6448/
+INFO  : Kill Command = /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop/bin/hadoop job  -kill job_1528077494936_6448
+INFO  : Hadoop job information for Stage-1: number of mappers: 9; number of reducers: 0
+INFO  : 2018-07-24 11:55:48,670 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 11:56:48,775 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 11:57:48,843 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 11:58:17,393 Stage-1 map = 11%,  reduce = 0%, Cumulative CPU 4.39 sec
+INFO  : 2018-07-24 11:58:18,412 Stage-1 map = 56%,  reduce = 0%, Cumulative CPU 24.77 sec
+INFO  : 2018-07-24 11:58:27,587 Stage-1 map = 86%,  reduce = 0%, Cumulative CPU 88.91 sec
+INFO  : 2018-07-24 11:58:31,662 Stage-1 map = 89%,  reduce = 0%, Cumulative CPU 93.07 sec
+INFO  : 2018-07-24 11:58:36,748 Stage-1 map = 94%,  reduce = 0%, Cumulative CPU 109.53 sec
+INFO  : 2018-07-24 11:58:37,765 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 113.54 sec
+INFO  : MapReduce Total cumulative CPU time: 1 minutes 53 seconds 540 msec
+INFO  : Ended Job = job_1528077494936_6448
+INFO  : Starting task [Stage-7:CONDITIONAL] in serial mode
+INFO  : Stage-4 is selected by condition resolver.
+INFO  : Stage-3 is filtered out by condition resolver.
+INFO  : Stage-5 is filtered out by condition resolver.
+INFO  : Starting task [Stage-4:MOVE] in serial mode
+INFO  : Moving data to: hdfs://dumbo/user/hive/warehouse/full.db/merged_final/.hive-staging_hive_2018-07-24_11-55-43_025_2400119333162022899-630/-ext-10000 from hdfs://dumbo/user/hive/warehouse/full.db/merged_final/.hive-staging_hive_2018-07-24_11-55-43_025_2400119333162022899-630/-ext-10002
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table full.merged_final from hdfs://dumbo/user/hive/warehouse/full.db/merged_final/.hive-staging_hive_2018-07-24_11-55-43_025_2400119333162022899-630/-ext-10000
+INFO  : Starting task [Stage-2:STATS] in serial mode
+INFO  : Table full.merged_final stats: [numFiles=9, numRows=39693421, totalSize=977170647, rawDataSize=937477226]
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 9   Cumulative CPU: 113.54 sec   HDFS Read: 898214861 HDFS Write: 977171399 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 1 minutes 53 seconds 540 msec
+INFO  : Completed executing command(queryId=hive_20180724115555_53c66b45-c85e-4d96-8af4-d7f382324753); Time taken: 179.423 seconds
+INFO  : OK
+No rows affected (179.808 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> CREATE EXTERNAL TABLE grouped (
+. . . . . . . . . . . . . . . . . . . . . .>   station INT,
+. . . . . . . . . . . . . . . . . . . . . .>   day_of_week INT,
+. . . . . . . . . . . . . . . . . . . . . .>   time_of_day INT,
+. . . . . . . . . . . . . . . . . . . . . .>   incid_ineff INT,
+. . . . . . . . . . . . . . . . . . . . . .>   flow_avg FLOAT,
+. . . . . . . . . . . . . . . . . . . . . .>   flow_std FLOAT,
+. . . . . . . . . . . . . . . . . . . . . .>   sample_size INT
+. . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+INFO  : Compiling command(queryId=hive_20180724131212_b130809a-940b-4f5e-ae20-bc97d83fc291): CREATE EXTERNAL TABLE grouped (
+station INT,
+day_of_week INT,
+time_of_day INT,
+incid_ineff INT,
+flow_avg FLOAT,
+flow_std FLOAT,
+sample_size INT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724131212_b130809a-940b-4f5e-ae20-bc97d83fc291); Time taken: 0.002 seconds
+INFO  : Executing command(queryId=hive_20180724131212_b130809a-940b-4f5e-ae20-bc97d83fc291): CREATE EXTERNAL TABLE grouped (
+station INT,
+day_of_week INT,
+time_of_day INT,
+incid_ineff INT,
+flow_avg FLOAT,
+flow_std FLOAT,
+sample_size INT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180724131212_b130809a-940b-4f5e-ae20-bc97d83fc291); Time taken: 0.042 seconds
+INFO  : OK
+No rows affected (0.101 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> INSERT OVERWRITE TABLE grouped
+. . . . . . . . . . . . . . . . . . . . . .> SELECT station,
+. . . . . . . . . . . . . . . . . . . . . .>        day_of_week,
+. . . . . . . . . . . . . . . . . . . . . .>        time_of_day,
+. . . . . . . . . . . . . . . . . . . . . .>        incid_ineff,
+. . . . . . . . . . . . . . . . . . . . . .>        AVG(flow_count) AS flow_avg,
+. . . . . . . . . . . . . . . . . . . . . .>        STDDEV_POP(flow_count) AS flow_std,
+. . . . . . . . . . . . . . . . . . . . . .>        count(1) AS sample_size
+. . . . . . . . . . . . . . . . . . . . . .> FROM merged_final
+. . . . . . . . . . . . . . . . . . . . . .> GROUP BY station, day_of_week, time_of_day, incid_ineff
+. . . . . . . . . . . . . . . . . . . . . .> GROUPING SETS((station, day_of_week, time_of_day, incid_ineff))
+. . . . . . . . . . . . . . . . . . . . . .> ORDER BY station ASC, day_of_week ASC, time_of_day ASC, incid_ineff ASC;
+INFO  : Compiling command(queryId=hive_20180724131212_1236a000-e1aa-437c-bcca-47cc0ae34f8a): INSERT OVERWRITE TABLE grouped
+SELECT station,
+day_of_week,
+time_of_day,
+incid_ineff,
+AVG(flow_count) AS flow_avg,
+STDDEV_POP(flow_count) AS flow_std,
+count(1) AS sample_size
+FROM merged_final
+GROUP BY station, day_of_week, time_of_day, incid_ineff
+GROUPING SETS((station, day_of_week, time_of_day, incid_ineff))
+ORDER BY station ASC, day_of_week ASC, time_of_day ASC, incid_ineff ASC
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_col0, type:int, comment:null), FieldSchema(name:_col1, type:int, comment:null), FieldSchema(name:_col2, type:int, comment:null), FieldSchema(name:_col3, type:int, comment:null), FieldSchema(name:_col4, type:float, comment:null), FieldSchema(name:_col5, type:float, comment:null), FieldSchema(name:_col6, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724131212_1236a000-e1aa-437c-bcca-47cc0ae34f8a); Time taken: 0.14 seconds
+INFO  : Executing command(queryId=hive_20180724131212_1236a000-e1aa-437c-bcca-47cc0ae34f8a): INSERT OVERWRITE TABLE grouped
+SELECT station,
+day_of_week,
+time_of_day,
+incid_ineff,
+AVG(flow_count) AS flow_avg,
+STDDEV_POP(flow_count) AS flow_std,
+count(1) AS sample_size
+FROM merged_final
+GROUP BY station, day_of_week, time_of_day, incid_ineff
+GROUPING SETS((station, day_of_week, time_of_day, incid_ineff))
+ORDER BY station ASC, day_of_week ASC, time_of_day ASC, incid_ineff ASC
+INFO  : Query ID = hive_20180724131212_1236a000-e1aa-437c-bcca-47cc0ae34f8a
+INFO  : Total jobs = 2
+INFO  : Launching Job 1 out of 2
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks not specified. Estimated from input data size: 15
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :   set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :   set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :   set mapreduce.job.reduces=<number>
+INFO  : number of splits:10
+INFO  : Submitting tokens for job: job_1528077494936_6463
+INFO  : The url to track the job: http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_6463/
+INFO  : Starting Job = job_1528077494936_6463, Tracking URL = http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_6463/
+INFO  : Kill Command = /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop/bin/hadoop job  -kill job_1528077494936_6463
+INFO  : Hadoop job information for Stage-1: number of mappers: 10; number of reducers: 15
+INFO  : 2018-07-24 13:12:50,110 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:13:50,338 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:14:50,547 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:15:50,703 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:16:50,802 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:17:50,963 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:18:51,097 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:19:51,536 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:20:51,641 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:21:51,750 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:22:51,836 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:23:51,939 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:24:52,025 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:25:52,139 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:26:52,188 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:27:52,271 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:28:52,359 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:29:52,425 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:30:52,467 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:31:52,549 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:32:52,610 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:33:52,661 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:34:52,726 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:35:52,728 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:36:52,767 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:37:52,794 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:38:52,838 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:39:52,858 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:40:52,873 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:41:52,893 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:42:52,912 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:43:15,315 Stage-1 map = 30%,  reduce = 0%, Cumulative CPU 37.09 sec
+INFO  : 2018-07-24 13:43:17,354 Stage-1 map = 40%,  reduce = 0%, Cumulative CPU 48.75 sec
+INFO  : 2018-07-24 13:43:18,373 Stage-1 map = 45%,  reduce = 0%, Cumulative CPU 63.94 sec
+INFO  : 2018-07-24 13:43:20,437 Stage-1 map = 55%,  reduce = 0%, Cumulative CPU 70.06 sec
+INFO  : 2018-07-24 13:43:21,458 Stage-1 map = 80%,  reduce = 0%, Cumulative CPU 84.67 sec
+INFO  : 2018-07-24 13:43:22,477 Stage-1 map = 90%,  reduce = 0%, Cumulative CPU 97.17 sec
+INFO  : 2018-07-24 13:43:23,496 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 103.88 sec
+INFO  : 2018-07-24 13:43:26,557 Stage-1 map = 100%,  reduce = 7%, Cumulative CPU 107.04 sec
+INFO  : 2018-07-24 13:43:30,649 Stage-1 map = 100%,  reduce = 13%, Cumulative CPU 110.23 sec
+INFO  : 2018-07-24 13:43:34,738 Stage-1 map = 100%,  reduce = 20%, Cumulative CPU 113.71 sec
+INFO  : 2018-07-24 13:43:37,790 Stage-1 map = 100%,  reduce = 27%, Cumulative CPU 116.42 sec
+INFO  : 2018-07-24 13:43:42,884 Stage-1 map = 100%,  reduce = 33%, Cumulative CPU 119.19 sec
+INFO  : 2018-07-24 13:43:45,937 Stage-1 map = 100%,  reduce = 40%, Cumulative CPU 122.06 sec
+INFO  : 2018-07-24 13:43:50,020 Stage-1 map = 100%,  reduce = 47%, Cumulative CPU 124.86 sec
+INFO  : 2018-07-24 13:43:54,088 Stage-1 map = 100%,  reduce = 53%, Cumulative CPU 127.59 sec
+INFO  : 2018-07-24 13:43:58,162 Stage-1 map = 100%,  reduce = 60%, Cumulative CPU 130.44 sec
+INFO  : 2018-07-24 13:44:02,230 Stage-1 map = 100%,  reduce = 67%, Cumulative CPU 133.2 sec
+INFO  : 2018-07-24 13:44:06,297 Stage-1 map = 100%,  reduce = 73%, Cumulative CPU 136.24 sec
+INFO  : 2018-07-24 13:44:10,361 Stage-1 map = 100%,  reduce = 80%, Cumulative CPU 139.22 sec
+INFO  : 2018-07-24 13:44:14,459 Stage-1 map = 100%,  reduce = 87%, Cumulative CPU 142.01 sec
+INFO  : 2018-07-24 13:44:18,540 Stage-1 map = 100%,  reduce = 93%, Cumulative CPU 144.88 sec
+INFO  : 2018-07-24 13:44:22,615 Stage-1 map = 100%,  reduce = 100%, Cumulative CPU 147.76 sec
+INFO  : MapReduce Total cumulative CPU time: 2 minutes 27 seconds 760 msec
+INFO  : Ended Job = job_1528077494936_6463
+INFO  : Launching Job 2 out of 2
+INFO  : Starting task [Stage-2:MAPRED] in serial mode
+INFO  : Number of reduce tasks determined at compile time: 1
+INFO  : In order to change the average load for a reducer (in bytes):
+INFO  :   set hive.exec.reducers.bytes.per.reducer=<number>
+INFO  : In order to limit the maximum number of reducers:
+INFO  :   set hive.exec.reducers.max=<number>
+INFO  : In order to set a constant number of reducers:
+INFO  :   set mapreduce.job.reduces=<number>
+INFO  : number of splits:11
+INFO  : Submitting tokens for job: job_1528077494936_6465
+INFO  : The url to track the job: http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_6465/
+INFO  : Starting Job = job_1528077494936_6465, Tracking URL = http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_6465/
+INFO  : Kill Command = /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop/bin/hadoop job  -kill job_1528077494936_6465
+INFO  : Hadoop job information for Stage-2: number of mappers: 11; number of reducers: 1
+INFO  : 2018-07-24 13:44:31,343 Stage-2 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 13:44:38,502 Stage-2 map = 9%,  reduce = 0%, Cumulative CPU 2.18 sec
+INFO  : 2018-07-24 13:44:42,583 Stage-2 map = 18%,  reduce = 0%, Cumulative CPU 4.39 sec
+INFO  : 2018-07-24 13:44:44,624 Stage-2 map = 27%,  reduce = 0%, Cumulative CPU 6.46 sec
+INFO  : 2018-07-24 13:44:45,645 Stage-2 map = 36%,  reduce = 0%, Cumulative CPU 8.3 sec
+INFO  : 2018-07-24 13:44:47,682 Stage-2 map = 45%,  reduce = 0%, Cumulative CPU 10.39 sec
+INFO  : 2018-07-24 13:44:51,758 Stage-2 map = 55%,  reduce = 0%, Cumulative CPU 12.49 sec
+INFO  : 2018-07-24 13:44:55,837 Stage-2 map = 64%,  reduce = 0%, Cumulative CPU 14.69 sec
+INFO  : 2018-07-24 13:44:59,906 Stage-2 map = 73%,  reduce = 0%, Cumulative CPU 16.96 sec
+INFO  : 2018-07-24 13:45:03,983 Stage-2 map = 82%,  reduce = 0%, Cumulative CPU 19.13 sec
+INFO  : 2018-07-24 13:45:08,067 Stage-2 map = 91%,  reduce = 0%, Cumulative CPU 21.11 sec
+INFO  : 2018-07-24 13:46:08,121 Stage-2 map = 91%,  reduce = 0%, Cumulative CPU 21.11 sec
+INFO  : 2018-07-24 13:47:08,136 Stage-2 map = 91%,  reduce = 0%, Cumulative CPU 21.11 sec
+INFO  : 2018-07-24 13:48:08,182 Stage-2 map = 91%,  reduce = 0%, Cumulative CPU 21.11 sec
+INFO  : 2018-07-24 13:49:08,209 Stage-2 map = 91%,  reduce = 0%, Cumulative CPU 21.11 sec
+INFO  : 2018-07-24 13:49:37,722 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 13:50:37,754 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 13:51:37,778 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 13:52:38,792 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 13:53:38,809 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 13:54:38,832 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 13:55:38,874 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 13:56:38,983 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 13:57:39,047 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 13:58:39,073 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 13:59:39,228 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:00:39,351 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:01:39,612 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:02:39,678 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:03:39,726 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:04:39,774 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:05:39,904 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:06:39,995 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:07:40,021 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:08:40,090 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:09:40,136 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:10:40,250 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:11:40,331 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:12:40,393 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:13:41,406 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:14:41,459 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:15:42,464 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:16:42,483 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:17:43,492 Stage-2 map = 100%,  reduce = 0%, Cumulative CPU 23.35 sec
+INFO  : 2018-07-24 14:17:44,509 Stage-2 map = 100%,  reduce = 100%, Cumulative CPU 31.07 sec
+INFO  : MapReduce Total cumulative CPU time: 31 seconds 70 msec
+INFO  : Ended Job = job_1528077494936_6465
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table full.grouped from hdfs://dumbo/user/hive/warehouse/full.db/grouped/.hive-staging_hive_2018-07-24_13-12-41_815_7202754179187831883-630/-ext-10000
+INFO  : Starting task [Stage-3:STATS] in serial mode
+INFO  : Table full.grouped stats: [numFiles=1, numRows=18810, totalSize=631774, rawDataSize=612964]
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 10  Reduce: 15   Cumulative CPU: 147.76 sec   HDFS Read: 977698918 HDFS Write: 773875 SUCCESS
+INFO  : Stage-Stage-2: Map: 11  Reduce: 1   Cumulative CPU: 31.07 sec   HDFS Read: 807518 HDFS Write: 631849 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 2 minutes 58 seconds 830 msec
+INFO  : Completed executing command(queryId=hive_20180724131212_1236a000-e1aa-437c-bcca-47cc0ae34f8a); Time taken: 3905.107 seconds
+INFO  : OK
+No rows affected (3905.376 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> select * from grouped as g limit 10;
+INFO  : Compiling command(queryId=hive_20180724144141_3cd23023-db44-4002-8c8c-e4ef0e444bda): select * from grouped as g limit 10
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:g.station, type:int, comment:null), FieldSchema(name:g.day_of_week, type:int, comment:null), FieldSchema(name:g.time_of_day, type:int, comment:null), FieldSchema(name:g.incid_ineff, type:int, comment:null), FieldSchema(name:g.flow_avg, type:float, comment:null), FieldSchema(name:g.flow_std, type:float, comment:null), FieldSchema(name:g.sample_size, type:int, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724144141_3cd23023-db44-4002-8c8c-e4ef0e444bda); Time taken: 0.193 seconds
+INFO  : Executing command(queryId=hive_20180724144141_3cd23023-db44-4002-8c8c-e4ef0e444bda): select * from grouped as g limit 10
+INFO  : Completed executing command(queryId=hive_20180724144141_3cd23023-db44-4002-8c8c-e4ef0e444bda); Time taken: 0.004 seconds
+INFO  : OK
++------------+----------------+----------------+----------------+----------------------+---------------------+----------------+--+
+| g.station  | g.day_of_week  | g.time_of_day  | g.incid_ineff  |      g.flow_avg      |     g.flow_std      | g.sample_size  |
++------------+----------------+----------------+----------------+----------------------+---------------------+----------------+--+
+| 0          | 0              | 0              | 0              | 13.606629371643066   | 32.34241485595703   | 12731          |
+| 0          | 0              | 0              | 1              | 3.8039214611053467   | 9.799999237060547   | 102            |
+| 0          | 0              | 1              | 0              | -2.2228028774261475  | 30.31562614440918   | 10525          |
+| 0          | 0              | 1              | 1              | -2.473856210708618   | 30.1374454498291    | 612            |
+| 0          | 0              | 2              | 0              | -23.003456115722656  | 100.60029602050781  | 10705          |
+| 0          | 0              | 2              | 1              | -21.997591018676758  | 113.90953063964844  | 415            |
+| 0          | 0              | 3              | 0              | -21.47235679626465   | 126.3770751953125   | 10310          |
+| 0          | 0              | 3              | 1              | -25.474714279174805  | 139.46566772460938  | 613            |
+| 0          | 0              | 4              | 0              | 41.36058807373047    | 100.40093994140625  | 10921          |
+| 0          | 0              | 4              | 1              | 54.14706039428711    | 112.70709991455078  | 204            |
++------------+----------------+----------------+----------------+----------------------+---------------------+----------------+--+
+10 rows selected (0.34 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> add file hdfs://dumbo/user/lz1714/project/hiveInput/python_code/z_test.py;
+INFO  : converting to local hdfs://dumbo/user/lz1714/project/hiveInput/python_code/z_test.py
+INFO  : Added resources: [hdfs://dumbo/user/lz1714/project/hiveInput/python_code/z_test.py]
+No rows affected (0.008 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> CREATE EXTERNAL TABLE flatted (
+. . . . . . . . . . . . . . . . . . . . . .>   station INT,
+. . . . . . . . . . . . . . . . . . . . . .>   day_of_week INT,
+. . . . . . . . . . . . . . . . . . . . . .>   time_of_day INT,
+. . . . . . . . . . . . . . . . . . . . . .>   incid_ineff INT,
+. . . . . . . . . . . . . . . . . . . . . .>   flow_avg FLOAT,
+. . . . . . . . . . . . . . . . . . . . . .>   flow_std FLOAT,
+. . . . . . . . . . . . . . . . . . . . . .>   sample_size INT
+. . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+INFO  : Compiling command(queryId=hive_20180724172929_1d3b1667-d3b9-41d8-839b-d37029098400): CREATE EXTERNAL TABLE flatted (
+station INT,
+day_of_week INT,
+time_of_day INT,
+incid_ineff INT,
+flow_avg FLOAT,
+flow_std FLOAT,
+sample_size INT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724172929_1d3b1667-d3b9-41d8-839b-d37029098400); Time taken: 0.002 seconds
+INFO  : Executing command(queryId=hive_20180724172929_1d3b1667-d3b9-41d8-839b-d37029098400): CREATE EXTERNAL TABLE flatted (
+station INT,
+day_of_week INT,
+time_of_day INT,
+incid_ineff INT,
+flow_avg FLOAT,
+flow_std FLOAT,
+sample_size INT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180724172929_1d3b1667-d3b9-41d8-839b-d37029098400); Time taken: 0.144 seconds
+INFO  : OK
+No rows affected (0.202 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> INSERT OVERWRITE TABLE flatted
+. . . . . . . . . . . . . . . . . . . . . .> SELECT TRANSFORM (station, day_of_week, time_of_day, incid_ineff,
+. . . . . . . . . . . . . . . . . . . . . .>                   flow_avg, flow_std, sample_size)
+. . . . . . . . . . . . . . . . . . . . . .> USING 'python t_test.py'
+. . . . . . . . . . . . . . . . . . . . . .> AS station, day_of_week, time_of_day, flow_avg_no, flow_avg_yes
+. . . . . . . . . . . . . . . . . . . . . .> FROM grouped;
+Error: Error while compiling statement: FAILED: SemanticException [Error 10044]: Line 1:23 Cannot insert into target table because column number/types are different 'flatted': Table insclause-0 has 7 columns, but query has 5 columns. (state=42000,code=10044)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> drop table flatted;
+INFO  : Compiling command(queryId=hive_20180724173030_d0545bcf-2ff2-455f-bb58-9054e83ac547): drop table flatted
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724173030_d0545bcf-2ff2-455f-bb58-9054e83ac547); Time taken: 0.007 seconds
+INFO  : Executing command(queryId=hive_20180724173030_d0545bcf-2ff2-455f-bb58-9054e83ac547): drop table flatted
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180724173030_d0545bcf-2ff2-455f-bb58-9054e83ac547); Time taken: 0.045 seconds
+INFO  : OK
+No rows affected (0.202 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> CREATE EXTERNAL TABLE flatted (
+. . . . . . . . . . . . . . . . . . . . . .>   station INT,
+. . . . . . . . . . . . . . . . . . . . . .>   day_of_week INT,
+. . . . . . . . . . . . . . . . . . . . . .>   time_of_day INT,
+. . . . . . . . . . . . . . . . . . . . . .>   flow_avg_no FLOAT,
+. . . . . . . . . . . . . . . . . . . . . .>   flow_avg_yes FLOAT
+. . . . . . . . . . . . . . . . . . . . . .> )
+. . . . . . . . . . . . . . . . . . . . . .> ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+INFO  : Compiling command(queryId=hive_20180724173030_1f1ab15e-e831-44bf-8176-0c23f6b1ccb5): CREATE EXTERNAL TABLE flatted (
+station INT,
+day_of_week INT,
+time_of_day INT,
+flow_avg_no FLOAT,
+flow_avg_yes FLOAT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:null, properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724173030_1f1ab15e-e831-44bf-8176-0c23f6b1ccb5); Time taken: 0.002 seconds
+INFO  : Executing command(queryId=hive_20180724173030_1f1ab15e-e831-44bf-8176-0c23f6b1ccb5): CREATE EXTERNAL TABLE flatted (
+station INT,
+day_of_week INT,
+time_of_day INT,
+flow_avg_no FLOAT,
+flow_avg_yes FLOAT
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
+INFO  : Starting task [Stage-0:DDL] in serial mode
+INFO  : Completed executing command(queryId=hive_20180724173030_1f1ab15e-e831-44bf-8176-0c23f6b1ccb5); Time taken: 0.041 seconds
+INFO  : OK
+No rows affected (0.107 seconds)
+0: jdbc:hive2://babar.es.its.nyu.edu:10000/> INSERT OVERWRITE TABLE flatted
+. . . . . . . . . . . . . . . . . . . . . .> SELECT TRANSFORM (station, day_of_week, time_of_day, incid_ineff,
+. . . . . . . . . . . . . . . . . . . . . .>                   flow_avg, flow_std, sample_size)
+. . . . . . . . . . . . . . . . . . . . . .> USING 'python t_test.py'
+. . . . . . . . . . . . . . . . . . . . . .> AS station, day_of_week, time_of_day, flow_avg_no, flow_avg_yes
+. . . . . . . . . . . . . . . . . . . . . .> FROM grouped;
+INFO  : Compiling command(queryId=hive_20180724173131_9376d4ae-6cda-43b2-99d9-c0854e8cd343): INSERT OVERWRITE TABLE flatted
+SELECT TRANSFORM (station, day_of_week, time_of_day, incid_ineff,
+flow_avg, flow_std, sample_size)
+USING 'python t_test.py'
+AS station, day_of_week, time_of_day, flow_avg_no, flow_avg_yes
+FROM grouped
+INFO  : Semantic Analysis Completed
+INFO  : Returning Hive schema: Schema(fieldSchemas:[FieldSchema(name:_col0, type:int, comment:null), FieldSchema(name:_col1, type:int, comment:null), FieldSchema(name:_col2, type:int, comment:null), FieldSchema(name:_col3, type:float, comment:null), FieldSchema(name:_col4, type:float, comment:null)], properties:null)
+INFO  : Completed compiling command(queryId=hive_20180724173131_9376d4ae-6cda-43b2-99d9-c0854e8cd343); Time taken: 0.125 seconds
+INFO  : Executing command(queryId=hive_20180724173131_9376d4ae-6cda-43b2-99d9-c0854e8cd343): INSERT OVERWRITE TABLE flatted
+SELECT TRANSFORM (station, day_of_week, time_of_day, incid_ineff,
+flow_avg, flow_std, sample_size)
+USING 'python t_test.py'
+AS station, day_of_week, time_of_day, flow_avg_no, flow_avg_yes
+FROM grouped
+INFO  : Query ID = hive_20180724173131_9376d4ae-6cda-43b2-99d9-c0854e8cd343
+INFO  : Total jobs = 3
+INFO  : Launching Job 1 out of 3
+INFO  : Starting task [Stage-1:MAPRED] in serial mode
+INFO  : Number of reduce tasks is set to 0 since there's no reduce operator
+INFO  : number of splits:1
+INFO  : Submitting tokens for job: job_1528077494936_6527
+INFO  : The url to track the job: http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_6527/
+INFO  : Starting Job = job_1528077494936_6527, Tracking URL = http://babar.es.its.nyu.edu:8088/proxy/application_1528077494936_6527/
+INFO  : Kill Command = /opt/cloudera/parcels/CDH-5.11.1-1.cdh5.11.1.p0.4/lib/hadoop/bin/hadoop job  -kill job_1528077494936_6527
+INFO  : Hadoop job information for Stage-1: number of mappers: 1; number of reducers: 0
+INFO  : 2018-07-24 18:14:15,435 Stage-1 map = 0%,  reduce = 0%
+INFO  : 2018-07-24 18:14:21,566 Stage-1 map = 100%,  reduce = 0%, Cumulative CPU 3.87 sec
+INFO  : MapReduce Total cumulative CPU time: 3 seconds 870 msec
+INFO  : Ended Job = job_1528077494936_6527
+INFO  : Starting task [Stage-7:CONDITIONAL] in serial mode
+INFO  : Stage-4 is selected by condition resolver.
+INFO  : Stage-3 is filtered out by condition resolver.
+INFO  : Stage-5 is filtered out by condition resolver.
+INFO  : Starting task [Stage-4:MOVE] in serial mode
+INFO  : Moving data to: hdfs://dumbo/user/hive/warehouse/full.db/flatted/.hive-staging_hive_2018-07-24_17-31-05_554_8648603820384264029-1/-ext-10000 from hdfs://dumbo/user/hive/warehouse/full.db/flatted/.hive-staging_hive_2018-07-24_17-31-05_554_8648603820384264029-1/-ext-10002
+INFO  : Starting task [Stage-0:MOVE] in serial mode
+INFO  : Loading data to table full.flatted from hdfs://dumbo/user/hive/warehouse/full.db/flatted/.hive-staging_hive_2018-07-24_17-31-05_554_8648603820384264029-1/-ext-10000
+INFO  : Starting task [Stage-2:STATS] in serial mode
+INFO  : Table full.flatted stats: [numFiles=1, numRows=5, totalSize=135, rawDataSize=130]
+INFO  : MapReduce Jobs Launched:
+INFO  : Stage-Stage-1: Map: 1   Cumulative CPU: 3.87 sec   HDFS Read: 636801 HDFS Write: 204 SUCCESS
+INFO  : Total MapReduce CPU Time Spent: 3 seconds 870 msec
+INFO  : Completed executing command(queryId=hive_20180724173131_9376d4ae-6cda-43b2-99d9-c0854e8cd343); Time taken: 2598.826 seconds
+INFO  : OK
+No rows affected (2599.133 seconds)

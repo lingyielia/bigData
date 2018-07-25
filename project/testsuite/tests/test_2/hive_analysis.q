@@ -1,8 +1,9 @@
 -- beeline
 !connect jdbc:hive2://babar.es.its.nyu.edu:10000/
 
-create database full;
-use full;
+create database test_2;
+use test_2;
+
 
 CREATE EXTERNAL TABLE flow (
   station INT,
@@ -12,7 +13,7 @@ CREATE EXTERNAL TABLE flow (
   start_date STRING
 )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
-LOCATION '/user/lz1714/project/hiveInput/full/flow';
+LOCATION '/user/lz1714/project/hiveInput/test_2/flow';
 
 CREATE EXTERNAL TABLE incident (
   station INT,
@@ -22,7 +23,7 @@ CREATE EXTERNAL TABLE incident (
   start_date STRING
 )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
-LOCATION '/user/lz1714/project/hiveInput/full/incid';
+LOCATION '/user/lz1714/project/hiveInput/test_2/incid';
 
 -- join two tables `flow` and `incident`
 -- +------------+----------------+----------------+---------------+---------------+-------------+--+
@@ -142,39 +143,4 @@ SELECT station,
        count(1) AS sample_size
 FROM merged_final
 GROUP BY station, day_of_week, time_of_day, incid_ineff
-GROUPING SETS((station, day_of_week, time_of_day, incid_ineff))
-ORDER BY station ASC, day_of_week ASC, time_of_day ASC, incid_ineff ASC;
-
-
--- reduce 2 records to 1 using streaming script
--- +----------+--------------+--------------+--------------+---------------+--+
--- | station  | day_of_week  | time_of_day  | flow_avg_no  | flow_avg_yes  |
--- +----------+--------------+--------------+--------------+---------------+--+
--- | 0        | 1            | 2            | 45.0         | 70.0          |
--- | 0        | 6            | 5            | 170.0        | 115.0         |
--- +----------+--------------+--------------+--------------+---------------+--+
-add file hdfs://dumbo/user/lz1714/project/hiveInput/python_code/z_test.py;
-
-CREATE EXTERNAL TABLE flatted (
-  station INT,
-  day_of_week INT,
-  time_of_day INT,
-  flow_avg_no FLOAT,
-  flow_avg_yes FLOAT
-)
-ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
-
-INSERT OVERWRITE TABLE flatted
-SELECT TRANSFORM (station, day_of_week, time_of_day, incid_ineff,
-                  flow_avg, flow_std, sample_size)
-USING 'python z_test.py'
-AS station, day_of_week, time_of_day, flow_avg_no, flow_avg_yes
-FROM grouped;
-
-
--- compute the z statistic
-SELECT ((AVG(flow_avg_no) - AVG(flow_avg_yes)) / (SQRT((POW(STDDEV_POP(flow_avg_no), 2) / COUNT(flow_avg_no)) + (POW(STDDEV_POP(flow_avg_yes), 2) / COUNT(flow_avg_yes))))) AS Z FROM flatted;
--- UP = AVG(flow_avg_no) - AVG(flow_avg_yes)
--- DOWN = SQRT((POW(STDDEV_POP(flow_avg_no), 2) / COUNT(flow_avg_no)) + (POW(STDDEV_POP(flow_avg_yes), 2) / COUNT(flow_avg_yes)))
--- A = POW(STDDEV_POP(flow_avg_no)) / COUNT(flow_avg_no)
--- B = POW(STDDEV_POP(flow_avg_yes)) / COUNT(flow_avg_yes)
+GROUPING SETS((station, day_of_week, time_of_day, incid_ineff));
