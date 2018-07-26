@@ -1,5 +1,5 @@
 -- beeline
-!connect jdbc:hive2://babar.es.its.nyu.edu:10000/
+-- !connect jdbc:hive2://babar.es.its.nyu.edu:10000/
 
 create database full;
 use full;
@@ -13,6 +13,27 @@ CREATE EXTERNAL TABLE flow (
 )
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t'
 LOCATION '/user/lz1714/project/hiveInput/full/flow';
+
+CREATE EXTERNAL TABLE flowgroup (
+  station INT,
+  day_of_week INT,
+  time_of_day INT,
+  flow_sum FLOAT,
+  start_date STRING
+)
+ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
+
+INSERT OVERWRITE TABLE flowgroup
+SELECT station,
+       day_of_week,
+       time_of_day,
+       SUM(flow_count) AS flow_sum,
+       start_date
+FROM flow
+GROUP BY station, start_date, time_of_day, day_of_week
+GROUPING SETS((station, start_date, time_of_day, day_of_week));
+-- ORDER BY station ASC, start_date ASC, time_of_day ASC;
+
 
 CREATE EXTERNAL TABLE incident (
   station INT,
@@ -71,8 +92,8 @@ CREATE EXTERNAL TABLE merged (
 ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
 
 INSERT OVERWRITE TABLE merged
-SELECT f.station, f.day_of_week, f.time_of_day, f.flow_count, f.start_date, i.incid_cnt
-FROM flow f LEFT OUTER JOIN incident_count i
+SELECT f.station, f.day_of_week, f.time_of_day, f.flow_sum, f.start_date, i.incid_cnt
+FROM flowgroup f LEFT OUTER JOIN incident_count i
 ON (f.station = i.station AND f.time_of_day = i.time_of_day AND f.start_date = i.start_date);
 
 -- add column `incid_ineff` == incident in effect
@@ -153,7 +174,7 @@ ORDER BY station ASC, day_of_week ASC, time_of_day ASC, incid_ineff ASC;
 -- | 0        | 1            | 2            | 45.0         | 70.0          |
 -- | 0        | 6            | 5            | 170.0        | 115.0         |
 -- +----------+--------------+--------------+--------------+---------------+--+
-add file hdfs://dumbo/user/lz1714/project/hiveInput/python_code/z_test.py;
+add file hdfs://dumbo/user/lz1714/project/hiveInput/python_code/combine_records.py;
 
 CREATE EXTERNAL TABLE flatted (
   station INT,
@@ -167,14 +188,10 @@ ROW FORMAT DELIMITED FIELDS TERMINATED BY '\t';
 INSERT OVERWRITE TABLE flatted
 SELECT TRANSFORM (station, day_of_week, time_of_day, incid_ineff,
                   flow_avg, flow_std, sample_size)
-USING 'python z_test.py'
+USING 'python combine_records.py'
 AS station, day_of_week, time_of_day, flow_avg_no, flow_avg_yes
 FROM grouped;
 
-
--- compute the z statistic
-SELECT ((AVG(flow_avg_no) - AVG(flow_avg_yes)) / (SQRT((POW(STDDEV_POP(flow_avg_no), 2) / COUNT(flow_avg_no)) + (POW(STDDEV_POP(flow_avg_yes), 2) / COUNT(flow_avg_yes))))) AS Z FROM flatted;
--- UP = AVG(flow_avg_no) - AVG(flow_avg_yes)
--- DOWN = SQRT((POW(STDDEV_POP(flow_avg_no), 2) / COUNT(flow_avg_no)) + (POW(STDDEV_POP(flow_avg_yes), 2) / COUNT(flow_avg_yes)))
--- A = POW(STDDEV_POP(flow_avg_no)) / COUNT(flow_avg_no)
--- B = POW(STDDEV_POP(flow_avg_yes)) / COUNT(flow_avg_yes)
+-- calculate mean, std, sample size for these two samples
+SELECT (AVG(flow_avg_yes) - AVG(flow_avg_no)) / SQRT(POW(STDDEV_POP(flow_avg_yes), 2)/COUNT(flow_avg_yes) + POW(STDDEV_POP(flow_avg_no), 2)/COUNT(flow_avg_no)) AS Z
+FROM flatted;
