@@ -35,11 +35,6 @@ c.NotebookApp.port = 8888
 jupyter notebook
 https://ec2-54-82-44-45.compute-1.amazonaws.com:8888/?token=5675d8a91961eea28d3efa6ec28c05a9aa775e3c9b621488
 
-
-#https://databricks.com/try-databricks
-# rtbdPass!1
-
-
 #EMR
 # start a new cluster
 # N. Califorlia zone
