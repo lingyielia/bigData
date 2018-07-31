@@ -1,6 +1,3 @@
-# module load spark/2.2.0
-# spark-submit --packages com.databricks:spark-csv_2.10:1.2.0 regression_tree.py
-
 chmod 400 newspark.pem
 # ssh -i newspark.pem ubuntu@ec2-54-82-44-45.compute-1.amazonaws.com
 ssh -i sparkkey.pem ubuntu@ec2-54-82-44-45.compute-1.amazonaws.com
