@@ -134,6 +134,22 @@ case sex
 end;
 ```
 
+### 597. Friend Requests I: Overall Acceptance Rate
+```
+select
+ifnull(round(count(distinct requester_id, accepter_id) / count(distinct sender_id, send_to_id), 2), 0) as accept_rate
+from friend_request, request_accepted;
+```
+follow-up
+```
+select date_format(request_date, '%Y-%m') as res_month,
+       ifnull(round((count(distinct requester_id, accepter_id)) /
+                    (count(distinct sender_id, send_to_id)), 2), 0) as accept_rate
+from friend_request, request_accepted
+where date_format(request_date, '%Y-%m') = date_format(accept_date, '%Y-%m')
+group by res_month;
+```
+
 ## Questions Pass
 ### 175. Combine Two Tables
 ```
@@ -179,4 +195,112 @@ select name, population, area
 from World
 where area > 3000000 or
       population > 25000000;
+```
+
+### 596. Classes More Than 5 Students
+```
+select class
+from courses
+group by class
+having count(distinct student) >= 5;
+```
+
+### 586. Customer Placing the Largest Number of Orders
+```
+select customer_number from orders
+group by customer_number
+having count(order_number) =
+  (
+    select max(order_count) as max_count
+    from
+    (
+      select count(order_number) as order_count
+      from orders
+      group by customer_number
+      ) t
+  );
+```
+
+### 620. Not Boring Movies
+```
+select *
+from cinema
+where id % 2 = 1 and
+      description not in ('boring')
+order by rating desc;
+```
+
+### 577. Employee Bonus
+> left join
+```
+select name, bonus
+from Employee e
+left join Bonus b
+on e.empId = b.empId
+where bonus < 1000 or bonus is null;
+```
+
+### 613. Shortest Distance in a Line
+```
+select min(p1.x - p2.x) as shortest
+from point p1, point p2
+where p1.x > p2.x;
+```
+
+### 603. Consecutive Available Seats
+> abs
+```
+select distinct c1.seat_id
+from cinema c1, cinema c2
+where abs(c1.seat_id - c2.seat_id) = 1 and
+      c1.free = 1 and
+      c2.free = 1
+order by seat_id;
+```
+
+### 584. Find Customer Referee
+```
+select name
+from customer
+where referee_id != 2 or referee_id is null;
+```
+
+### 607. Sales Person
+```
+select s.name
+from salesperson s
+left join
+(
+  select sales_id
+  from orders o, company c
+  where o.com_id = c.com_id and
+        c.name = 'RED'
+) t
+on s.sales_id = t.sales_id
+where t.sales_id is null;
+```
+
+### 619. Biggest Single Number
+> deal with null case
+```
+select
+(
+  select num
+  from number
+  group by num
+  having count(num) = 1
+  order by num desc
+  limit 1
+) as num;
+```
+
+### 610. Triangle Judgement
+> case
+```
+select x, y, z,
+       case
+           when x + y > z and x + z > y and y + z > x then 'Yes'
+           else 'No'
+       end as 'triangle'
+from triangle;
 ```
