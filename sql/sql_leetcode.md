@@ -9,12 +9,6 @@
 - order by
 - limit
 
-## Components
-- create row number
-- self join
-- case
-- calculate median
-
 ## Questions
 ### 184. Department Highest Salary
 ```
