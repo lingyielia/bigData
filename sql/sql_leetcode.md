@@ -10,7 +10,10 @@
 - order by
 - limit
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 28fae6c71bbdffa37b5496b756ed66750ead693c
 ## Questions
 ### 184. Department Highest Salary
 ```
@@ -133,7 +136,8 @@ end;
 ### 597. Friend Requests I: Overall Acceptance Rate
 ```
 select
-ifnull(round(count(distinct requester_id, accepter_id) / count(distinct sender_id, send_to_id), 2), 0) as accept_rate
+ifnull(round(count(distinct requester_id, accepter_id) / 
+             count(distinct sender_id, send_to_id), 2), 0) as accept_rate
 from friend_request, request_accepted;
 ```
 follow-up
