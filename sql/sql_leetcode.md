@@ -551,11 +551,26 @@ on c.pay_month = d.pay_month;
 select t_am.America, t_as.Asia, t_eu.Europe
 from
 (select @id1:=0, @id2:=0, @id3:=0) t,
-(select @id1:=@id1+1 as id1, name as Asia from student where continent = 'Asia' order by Asia) t_as
+(
+    select @id1:=@id1+1 as id1, name as Asia 
+    from student 
+    where continent = 'Asia' 
+    order by Asia
+) t_as
 right join
-(select @id2:=@id2+1 as id2, name as America from student where continent = 'America' order by America) t_am
+(
+    select @id2:=@id2+1 as id2, name as America 
+    from student 
+    where continent = 'America' 
+    order by America
+) t_am
 on t_as.id1 = t_am.id2
 left join
-(select @id3:=@id3+1 as id3, name as Europe from student where continent = 'Europe' order by Europe) t_eu
+(
+    select @id3:=@id3+1 as id3, name as Europe 
+    from student 
+    where continent = 'Europe' 
+    order by Europe
+) t_eu
 on t_am.id2 = t_eu.id3;
 ```
