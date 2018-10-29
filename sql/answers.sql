@@ -216,3 +216,69 @@ where c.customerid not in
   from orders o2
   where o2.employeeid = 4
 );
+
+------ Hard ------
+------------------
+-- 1.
+select (o2.unitprice::money::numeric::float8 * o2.quantity) as totalprice,
+       o1.customerid as customerid
+from orders o1
+join orderdetails o2
+on o1.orderid = o2.orderid
+where (o2.unitprice::money::numeric::float8 * o2.quantity) >= 10000;
+-- where (o2.unitprice::money::numeric::float8 * o2.quantity) >= 10000 and
+--       o1.orderdate between '2016-01-01' and '2017-01-01';
+
+-- 2.
+select (o2.unitprice::money::numeric::float8 * o2.quantity) as totalprice,
+       o1.customerid as customerid
+from orders o1
+join orderdetails o2
+on o1.orderid = o2.orderid
+where (o2.unitprice::money::numeric::float8 * o2.quantity) >= 15000 and
+      o1.orderdate between '2016-01-01' and '2017-01-01';
+      
+-- 3.
+select (o2.unitprice::money::numeric::float8 * o2.quantity * (1 - o2.discount)) as totalprice,
+       o1.customerid as customerid
+from orders o1
+join orderdetails o2
+on o1.orderid = o2.orderid
+where (o2.unitprice::money::numeric::float8 * o2.quantity * (1 - o2.discount)) >= 15000 and
+      o1.orderdate between '2016-01-01' and '2017-01-01'
+order by totalprice;
+
+-- 4.
+select orderdate, employeeid, orderid
+from orders
+where orderdate = (date_trunc('month', orderdate::date) + interval '1 month' - interval '1 day')::date
+order by employeeid, orderid;
+
+-- 5.
+select orderid, count(*) as totalcount
+from orderdetails
+group by orderid
+order by totalcount desc
+limit 10;
+
+-- 6.
+select * from orderdetails where random() < 0.02;
+
+-- 7.
+select * from orderdetails 
+where quantity >= 60
+order by orderid;
+
+-- 8.
+
+
+-- 9.
+select (requireddate::date - shippeddate::date) as delay,
+       orderid
+from orders
+where (requireddate::date - shippeddate::date) > 0
+order by delay;
+
+-- 10.
+
+      
